@@ -1,0 +1,42 @@
+div#header {
+  display: grid;
+  grid-template-columns: 1fr min(44rem, 80%) 4rem 1fr;
+  grid-template-rows: 2rem;
+
+  padding: 1rem;
+
+  background: #202020;
+}
+
+input#url {
+  grid-column-start: 2;
+
+  border: 0.08rem solid #303030;
+  padding: 0.25rem 0.5rem 0.3rem;
+
+  background: #121212;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+button#search {
+  grid-column-start: 3;
+
+  border: 0.08rem solid #303030;
+  border-left: 0;
+  padding: 0.2rem 0.25rem 0.35rem;
+
+  background: #ff0000;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button#search:hover {
+  background: #dd0000;
+}
+
+button#search:disabled {
+  background: #303030;
+  color: #ffffff;
+}

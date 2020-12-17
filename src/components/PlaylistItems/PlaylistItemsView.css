@@ -1,0 +1,5 @@
+div#playlistItems {
+  display: grid;
+
+  padding: 20px;
+}

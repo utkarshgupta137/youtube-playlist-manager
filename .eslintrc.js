@@ -13,6 +13,9 @@ const eslintrc = {
     "prettier/react",
     "prettier/standard",
   ],
+  globals: {
+    gapi: "readonly",
+  },
   rules: {
     "arrow-body-style": ["error", "always"],
     curly: ["error", "all"],
