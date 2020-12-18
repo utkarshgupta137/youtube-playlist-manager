@@ -24,44 +24,36 @@ const playlistItemsSlice = createSlice({
 
       state.playlistItemsError = action.payload.playlistItemsError;
     },
-    listVideosSuccess(state, action) {
-      state.playlistItemsError = initialState.playlistItemsError;
-
-      state.playlistItemsList = state.playlistItemsList.map(
-        (playlistItem, i) => {
-          return {
-            ...playlistItem,
-            video: action.payload.playlistItemsList[i],
-          };
-        }
-      );
-    },
-    listVideosFailed(state, action) {
-      state.playlistItemsError = action.payload.playlistItemsError;
-    },
   },
 });
 
 const {
   listPlaylistItemsSuccess,
   listPlaylistItemsFailed,
-  listVideosSuccess,
-  listVideosFailed,
 } = playlistItemsSlice.actions;
 
-const fetchVideos = (ids) => {
+const fetchVideos = (result) => {
   return async (dispatch) => {
+    const ids = result.items.map((playlistItem) => {
+      return playlistItem.snippet.resourceId.videoId;
+    });
+
     listVideos(ids)
       .then((response) => {
+        result.items.forEach((playlistItem, i) => {
+          playlistItem.video = response.result.items[i];
+        });
+
         return dispatch(
-          listVideosSuccess({
-            playlistItemsList: response.result.items,
+          listPlaylistItemsSuccess({
+            playlistItemsList: result.items,
+            playlistItemsToken: result.nextPageToken,
           })
         );
       })
       .catch((response) => {
-        dispatch(
-          listVideosFailed({
+        return dispatch(
+          listPlaylistItemsFailed({
             playlistItemsError: response,
           })
         );
@@ -73,20 +65,10 @@ const fetchPlaylistItems = (playlistId) => {
   return async (dispatch) => {
     listPlaylistItems(playlistId)
       .then((response) => {
-        const ids = response.result.items.map((playlistItem) => {
-          return playlistItem.snippet.resourceId.videoId;
-        });
-        dispatch(fetchVideos(ids));
-
-        return dispatch(
-          listPlaylistItemsSuccess({
-            playlistItemsList: response.result.items,
-            playlistItemsToken: response.result.nextPageToken,
-          })
-        );
+        return dispatch(fetchVideos(response.result));
       })
       .catch((response) => {
-        dispatch(
+        return dispatch(
           listPlaylistItemsFailed({
             playlistItemsError: response,
           })
