@@ -1,3 +1,4 @@
+import CssBaseline from "@material-ui/core/CssBaseline";
 import React, { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -40,6 +41,7 @@ const App = () => {
 
   return (
     <>
+      <CssBaseline />
       <HeaderView url={url} setUrl={setUrl} />
       {components}
     </>
