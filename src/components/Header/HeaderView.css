@@ -3,7 +3,7 @@ div#header {
   grid-template-columns: 1fr min(44rem, 80%) 4rem 1fr;
   grid-template-rows: 2rem;
 
-  padding: 1rem;
+  padding: 1rem 2rem;
 
   background: #202020;
 }
@@ -14,9 +14,10 @@ input#url {
   border: 0.08rem solid #303030;
   padding: 0.25rem 0.5rem 0.3rem;
 
+  font-size: 1rem;
+
   background: #121212;
   color: #ffffff;
-  font-size: 1rem;
 }
 
 button#search {
@@ -26,10 +27,11 @@ button#search {
   border-left: 0;
   padding: 0.2rem 0.25rem 0.35rem;
 
+  font-size: 1rem;
+
   background: #ff0000;
   color: #ffffff;
   cursor: pointer;
-  font-size: 1rem;
 }
 
 button#search:hover {
