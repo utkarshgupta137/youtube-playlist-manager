@@ -40,5 +40,4 @@ button#search:hover {
 
 button#search:disabled {
   background: #303030;
-  color: #ffffff;
 }
