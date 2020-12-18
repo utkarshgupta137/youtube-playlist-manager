@@ -17,7 +17,7 @@ const PlaylistItemsView = ({ playlistItemsList }) => {
             accessor: "snippet.position",
           },
           {
-            Header: "Added At",
+            Header: "Added",
             accessor: "snippet.publishedAt",
           },
         ],
@@ -38,7 +38,7 @@ const PlaylistItemsView = ({ playlistItemsList }) => {
             accessor: "video.contentDetails.duration",
           },
           {
-            Header: "Published At",
+            Header: "Published",
             accessor: "video.snippet.publishedAt",
           },
         ],
@@ -67,23 +67,28 @@ const PlaylistItemsView = ({ playlistItemsList }) => {
     ];
   }, []);
 
-  const data = cloneDeep(playlistItemsList);
-  data.forEach((playlistItem) => {
-    playlistItem.snippet.publishedAt = playlistItem.snippet.publishedAt.substring(
-      0,
-      10
-    );
-    if (playlistItem.video) {
-      playlistItem.video.contentDetails.duration = playlistItem.video.contentDetails.duration
-        .replace("P", "")
-        .replace("T", "")
-        .toLowerCase();
-      playlistItem.video.snippet.publishedAt = playlistItem.video.snippet.publishedAt.substring(
+  const data = useMemo(() => {
+    return cloneDeep(playlistItemsList).map((playlistItem) => {
+      playlistItem.snippet.position += 1;
+      playlistItem.snippet.publishedAt = playlistItem.snippet.publishedAt.substring(
         0,
         10
       );
-    }
-  });
+
+      if (playlistItem.video) {
+        playlistItem.video.snippet.publishedAt = playlistItem.video.snippet.publishedAt.substring(
+          0,
+          10
+        );
+        playlistItem.video.contentDetails.duration = playlistItem.video.contentDetails.duration
+          .replace("P", "")
+          .replace("T", "")
+          .toLowerCase();
+      }
+
+      return playlistItem;
+    });
+  }, [playlistItemsList]);
 
   return (
     <div id="playlistItems">
