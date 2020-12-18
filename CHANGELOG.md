@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.1...v0.1.2) (2020-12-18)
+
+
+### Features
+
+* **redux:** persist to localStorage ([c9be31a](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/c9be31a3964ae6bce3da3dc4cb77313da66a0b4e))
+
+
+### Bug Fixes
+
+* **css:** remove unnecessary css ([5f090ee](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/5f090eeb6c37a342d69f06790c211d2d426ad42c))
+
 ### [0.1.1](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.0...v0.1.1) (2020-12-18)
 
 
