@@ -24,9 +24,7 @@ const isChannelUrl = (url) => {
 const isPlaylistUrl = (url) => {
   const urlObj = getURL(url);
   if (urlObj) {
-    return (
-      urlObj.pathname.startsWith("/playlist") && urlObj.searchParams.has("list")
-    );
+    return urlObj.searchParams.has("list");
   }
   return false;
 };
