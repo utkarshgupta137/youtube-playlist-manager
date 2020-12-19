@@ -24,6 +24,12 @@ const HeaderView = ({ url, setUrl }) => {
     }, 3000);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      onSearchButtonClicked();
+    }
+  };
+
   useEffect(() => {
     if (isPlaylistUrl(currentUrl)) {
       setSearchDisabled(false);
@@ -39,6 +45,7 @@ const HeaderView = ({ url, setUrl }) => {
         type="text"
         value={currentUrl}
         onChange={onCurrentUrlChanged}
+        onKeyDown={handleKeyDown}
         placeholder="Playlist URL"
       />
       <button
