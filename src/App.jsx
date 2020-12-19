@@ -1,5 +1,5 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import HeaderView from "./components/Header/HeaderView";
@@ -23,16 +23,11 @@ const App = () => {
     (newUrl) => {
       if (isPlaylistUrl(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
+        dispatch(fetchPlaylistItems(getPlaylistId(newUrl)));
       }
     },
     [dispatch]
   );
-
-  useEffect(() => {
-    if (isPlaylistUrl(url)) {
-      dispatch(fetchPlaylistItems(getPlaylistId(url)));
-    }
-  }, [url, dispatch]);
 
   let components;
   if (isPlaylistUrl(url) && playlistItemsList.length > 0) {

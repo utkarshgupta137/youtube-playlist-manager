@@ -1,12 +1,13 @@
-import SearchIcon from "@material-ui/icons/Search";
+import { Refresh, Search } from "@material-ui/icons";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { isPlaylistUrl } from "../../utils/urlUtils";
 import "./HeaderView.css";
 
 const HeaderView = ({ url, setUrl }) => {
   const [currentUrl, setCurrentUrl] = useState(url);
+  const [searchDisabled, setSearchDisabled] = useState(true);
 
   const onCurrentUrlChanged = (e) => {
     setCurrentUrl(e.target.value);
@@ -14,12 +15,19 @@ const HeaderView = ({ url, setUrl }) => {
 
   const onSearchButtonClicked = () => {
     setUrl(currentUrl);
+    setSearchDisabled(true);
+    setTimeout(() => {
+      setSearchDisabled(false);
+    }, 3000);
   };
 
-  let isSearchButtonDisabled = true;
-  if (isPlaylistUrl(currentUrl)) {
-    isSearchButtonDisabled = false;
-  }
+  useEffect(() => {
+    if (isPlaylistUrl(currentUrl)) {
+      setSearchDisabled(false);
+    } else {
+      setSearchDisabled(true);
+    }
+  }, [url, currentUrl]);
 
   return (
     <div id="header">
@@ -33,10 +41,10 @@ const HeaderView = ({ url, setUrl }) => {
       <button
         id="search"
         type="button"
-        disabled={isSearchButtonDisabled}
+        disabled={searchDisabled}
         onClick={onSearchButtonClicked}
       >
-        <SearchIcon />
+        {url === currentUrl ? <Refresh /> : <Search />}
       </button>
     </div>
   );
