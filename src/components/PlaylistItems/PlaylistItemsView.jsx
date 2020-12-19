@@ -17,7 +17,11 @@ const PlaylistItemsView = ({ playlistItemsList }) => {
             accessor: "snippet.position",
           },
           {
-            Header: "Added",
+            Header: "Added by",
+            accessor: "snippet.channelTitle",
+          },
+          {
+            Header: "Added on",
             accessor: "snippet.publishedAt",
           },
         ],
@@ -31,15 +35,15 @@ const PlaylistItemsView = ({ playlistItemsList }) => {
           },
           {
             Header: "Channel Title",
-            accessor: "snippet.channelTitle",
+            accessor: "video.snippet.channelTitle",
+          },
+          {
+            Header: "Published on",
+            accessor: "video.snippet.publishedAt",
           },
           {
             Header: "Duration",
             accessor: "video.contentDetails.duration",
-          },
-          {
-            Header: "Published",
-            accessor: "video.snippet.publishedAt",
           },
         ],
       },
