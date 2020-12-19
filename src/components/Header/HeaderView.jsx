@@ -1,4 +1,7 @@
-import { Refresh, Search } from "@material-ui/icons";
+import IconButton from "@material-ui/core/IconButton";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import SearchIcon from "@material-ui/icons/Search";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
@@ -44,8 +47,16 @@ const HeaderView = ({ url, setUrl }) => {
         disabled={searchDisabled}
         onClick={onSearchButtonClicked}
       >
-        {url === currentUrl ? <Refresh /> : <Search />}
+        {url === currentUrl ? <RefreshIcon /> : <SearchIcon />}
       </button>
+      <IconButton
+        id="github"
+        edge="end"
+        component="a"
+        href="https://github.com/utkarshgupta137/youtube-playlist-manager"
+      >
+        <GitHubIcon />
+      </IconButton>
     </div>
   );
 };

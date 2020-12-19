@@ -1,15 +1,16 @@
 div#header {
   display: grid;
-  grid-template-columns: 1fr min(44rem, 80%) 4rem 1fr;
-  grid-template-rows: 2rem;
+  grid-template-columns: 3rem 1fr min(48rem, 80%) 4rem 1fr 3rem;
+  grid-template-rows: 0.5rem 2rem 0.5rem;
 
-  padding: 1rem 2rem;
+  padding: 0.5rem 1.25rem;
 
   background: #202020;
 }
 
 input#url {
-  grid-column-start: 2;
+  grid-column-start: 3;
+  grid-row-start: 2;
 
   border: 0.08rem solid #303030;
   padding: 0.25rem 0.5rem 0.3rem;
@@ -21,7 +22,8 @@ input#url {
 }
 
 button#search {
-  grid-column-start: 3;
+  grid-column-start: 4;
+  grid-row-start: 2;
 
   border: 0.08rem solid #303030;
   border-left: 0;
@@ -40,4 +42,18 @@ button#search:hover {
 
 button#search:disabled {
   background: #303030;
+}
+
+a#github {
+  grid-column-start: 6;
+  grid-row-start: 1;
+  grid-row-end: 3;
+
+  margin: auto;
+
+  color: #ffffff;
+}
+
+a#github:hover {
+  background-color: rgba(255, 255, 255, 0.08);
 }
