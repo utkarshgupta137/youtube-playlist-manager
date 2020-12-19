@@ -92,7 +92,7 @@ async function listPlaylistItems(playlistId, pageToken) {
 
 async function listVideos(id, pageToken) {
   return gapi.client.youtube.videos.list({
-    part: ["snippet,contentDetails,statistics,status"],
+    part: ["snippet,contentDetails,statistics"],
     maxResults: 50,
     id,
     pageToken,
