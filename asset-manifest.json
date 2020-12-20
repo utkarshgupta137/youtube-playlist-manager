@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/youtube-playlist-manager/static/css/main.3916e76e.chunk.css",
-    "main.js": "/youtube-playlist-manager/static/js/main.0b7d0793.chunk.js",
-    "main.js.map": "/youtube-playlist-manager/static/js/main.0b7d0793.chunk.js.map",
+    "main.css": "/youtube-playlist-manager/static/css/main.efec83eb.chunk.css",
+    "main.js": "/youtube-playlist-manager/static/js/main.d911b2c8.chunk.js",
+    "main.js.map": "/youtube-playlist-manager/static/js/main.d911b2c8.chunk.js.map",
     "runtime-main.js": "/youtube-playlist-manager/static/js/runtime-main.0538b3a2.js",
     "runtime-main.js.map": "/youtube-playlist-manager/static/js/runtime-main.0538b3a2.js.map",
-    "static/js/2.e000504d.chunk.js": "/youtube-playlist-manager/static/js/2.e000504d.chunk.js",
-    "static/js/2.e000504d.chunk.js.map": "/youtube-playlist-manager/static/js/2.e000504d.chunk.js.map",
+    "static/js/2.6bb5bc1a.chunk.js": "/youtube-playlist-manager/static/js/2.6bb5bc1a.chunk.js",
+    "static/js/2.6bb5bc1a.chunk.js.map": "/youtube-playlist-manager/static/js/2.6bb5bc1a.chunk.js.map",
     "index.html": "/youtube-playlist-manager/index.html",
-    "static/css/main.3916e76e.chunk.css.map": "/youtube-playlist-manager/static/css/main.3916e76e.chunk.css.map",
-    "static/js/2.e000504d.chunk.js.LICENSE.txt": "/youtube-playlist-manager/static/js/2.e000504d.chunk.js.LICENSE.txt"
+    "static/css/main.efec83eb.chunk.css.map": "/youtube-playlist-manager/static/css/main.efec83eb.chunk.css.map",
+    "static/js/2.6bb5bc1a.chunk.js.LICENSE.txt": "/youtube-playlist-manager/static/js/2.6bb5bc1a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0538b3a2.js",
-    "static/js/2.e000504d.chunk.js",
-    "static/css/main.3916e76e.chunk.css",
-    "static/js/main.0b7d0793.chunk.js"
+    "static/js/2.6bb5bc1a.chunk.js",
+    "static/css/main.efec83eb.chunk.css",
+    "static/js/main.d911b2c8.chunk.js"
   ]
 }
