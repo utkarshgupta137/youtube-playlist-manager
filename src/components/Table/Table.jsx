@@ -3,18 +3,24 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import PropTypes from "prop-types";
 import React from "react";
 import { useTable } from "react-table";
 
 import "./Table.css";
 
 const Table = ({ columns, data }) => {
-  const { getTableProps, headerGroups, rows, prepareRow } = useTable({
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
     columns,
     data,
   });
 
-  // Render the UI for your table
   return (
     <MuiTable {...getTableProps()}>
       <TableHead>
@@ -32,7 +38,7 @@ const Table = ({ columns, data }) => {
           );
         })}
       </TableHead>
-      <TableBody>
+      <TableBody {...getTableBodyProps()}>
         {rows.map((row) => {
           prepareRow(row);
           return (
@@ -50,6 +56,11 @@ const Table = ({ columns, data }) => {
       </TableBody>
     </MuiTable>
   );
+};
+
+Table.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Table;
