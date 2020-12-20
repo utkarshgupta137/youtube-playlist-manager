@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.3...v0.1.4) (2020-12-20)
+
+
+### Features
+
+* add google analytics ([c46cde6](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/c46cde61e33ec4eb8fbbb0e7c50b4b3759e4434f))
+* **url:** trigger on enter key ([140d17f](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/140d17f902514b0d9a6a80c21853b18abf77d14a))
+
+
+### Bug Fixes
+
+* **css:** add more padding at page bottom ([52de590](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/52de590e9fafdcc76e97d52b59ac306e40bf8469))
+* **css:** fix header width on mobile ([5067da5](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/5067da59904738d30d3a769f3a80fddbae10e31a))
+* **table:** add missing getTableBodyProps and add prop-types ([29cfb2a](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/29cfb2aa198bcb7aaa9d0a5c5430a7c40f0ab990))
+
 ### [0.1.3](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.2...v0.1.3) (2020-12-19)
 
 
