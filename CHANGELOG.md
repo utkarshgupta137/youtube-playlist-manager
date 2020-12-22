@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.4...v0.1.5) (2020-12-22)
+
+
+### Features
+
+* add scroll to fetch more items ([1f79db7](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/1f79db7b8668509ee01f3af5978e458459daca5a))
+
+
+### Bug Fixes
+
+* remove material-ui ([1df137b](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/1df137bb85b8cc996ba7fb69328067ab362c459c))
+
 ### [0.1.4](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.3...v0.1.4) (2020-12-20)
 
 
