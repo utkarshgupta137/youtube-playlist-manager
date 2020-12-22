@@ -19,10 +19,7 @@ const playlistItemsSlice = createSlice({
       state.playlistItemsToken = action.payload.playlistItemsToken;
     },
     listPlaylistItemsFailed(state, action) {
-      state.playlistItemsList = initialState.playlistItemsList;
-      state.playlistItemsToken = initialState.playlistItemsToken;
-
-      state.playlistItemsError = action.payload.playlistItemsError;
+      state.playlistItemsError = action.payload;
     },
   },
 });
@@ -33,7 +30,7 @@ const {
 } = playlistItemsSlice.actions;
 
 const fetchVideos = (result) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     const ids = result.items.map((playlistItem) => {
       return playlistItem.snippet.resourceId.videoId;
     });
@@ -44,6 +41,10 @@ const fetchVideos = (result) => {
           playlistItem.video = response.result.items[i];
         });
 
+        if (result.prevPageToken) {
+          const { playlistItemsList } = getState().playlistItemsView;
+          result.items = playlistItemsList.concat(result.items);
+        }
         dispatch(
           listPlaylistItemsSuccess({
             playlistItemsList: result.items,
@@ -53,28 +54,20 @@ const fetchVideos = (result) => {
         return true;
       })
       .catch((response) => {
-        dispatch(
-          listPlaylistItemsFailed({
-            playlistItemsError: response,
-          })
-        );
+        dispatch(listPlaylistItemsFailed(response));
       });
   };
 };
 
-const fetchPlaylistItems = (playlistId) => {
+const fetchPlaylistItems = (playlistId, pageToken) => {
   return async (dispatch) => {
-    listPlaylistItems(playlistId)
+    listPlaylistItems(playlistId, pageToken)
       .then((response) => {
         dispatch(fetchVideos(response.result));
         return true;
       })
       .catch((response) => {
-        dispatch(
-          listPlaylistItemsFailed({
-            playlistItemsError: response,
-          })
-        );
+        dispatch(listPlaylistItemsFailed(response));
       });
   };
 };

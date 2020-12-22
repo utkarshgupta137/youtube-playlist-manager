@@ -14,7 +14,7 @@ const App = () => {
     return state.headerView;
   });
 
-  const { playlistItemsList } = useSelector((state) => {
+  const { playlistItemsList, playlistItemsToken } = useSelector((state) => {
     return state.playlistItemsView;
   });
 
@@ -28,11 +28,19 @@ const App = () => {
     [dispatch]
   );
 
+  const fetchMorePlaylistItems = useCallback(() => {
+    dispatch(fetchPlaylistItems(getPlaylistId(url), playlistItemsToken));
+  }, [url, playlistItemsToken, dispatch]);
+
   return (
     <>
       <HeaderView url={url} setUrl={setUrl} />
       {isPlaylistUrl(url) && playlistItemsList.length > 0 && (
-        <PlaylistItemsView playlistItemsList={playlistItemsList} />
+        <PlaylistItemsView
+          playlistItemsList={playlistItemsList}
+          hasMore={!!playlistItemsToken}
+          next={fetchMorePlaylistItems}
+        />
       )}
     </>
   );

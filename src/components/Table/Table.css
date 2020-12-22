@@ -31,3 +31,16 @@ div .table .header {
 div .table .cell {
   font-weight: 500;
 }
+
+div#loader {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 1rem;
+
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  color: #ffffff;
+}

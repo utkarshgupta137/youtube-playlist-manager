@@ -6,7 +6,7 @@ import Table from "../Table/Table";
 
 import "./PlaylistItemsView.css";
 
-const PlaylistItemsView = ({ playlistItemsList }) => {
+const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
   const columns = useMemo(() => {
     return [
       {
@@ -65,13 +65,15 @@ const PlaylistItemsView = ({ playlistItemsList }) => {
 
   return (
     <div id="playlistItems">
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={data} hasMore={hasMore} next={next} />
     </div>
   );
 };
 
 PlaylistItemsView.propTypes = {
   playlistItemsList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  hasMore: PropTypes.bool.isRequired,
+  next: PropTypes.func.isRequired,
 };
 
 export default PlaylistItemsView;
