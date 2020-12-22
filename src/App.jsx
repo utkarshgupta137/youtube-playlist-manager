@@ -1,4 +1,3 @@
-import CssBaseline from "@material-ui/core/CssBaseline";
 import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -29,16 +28,12 @@ const App = () => {
     [dispatch]
   );
 
-  let components;
-  if (isPlaylistUrl(url) && playlistItemsList.length > 0) {
-    components = <PlaylistItemsView playlistItemsList={playlistItemsList} />;
-  }
-
   return (
     <>
-      <CssBaseline />
       <HeaderView url={url} setUrl={setUrl} />
-      {components}
+      {isPlaylistUrl(url) && playlistItemsList.length > 0 && (
+        <PlaylistItemsView playlistItemsList={playlistItemsList} />
+      )}
     </>
   );
 };

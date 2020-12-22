@@ -1,7 +1,6 @@
-import IconButton from "@material-ui/core/IconButton";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import SearchIcon from "@material-ui/icons/Search";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faRedo, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
@@ -54,16 +53,16 @@ const HeaderView = ({ url, setUrl }) => {
         disabled={searchDisabled}
         onClick={onSearchButtonClicked}
       >
-        {url === currentUrl ? <RefreshIcon /> : <SearchIcon />}
+        <FontAwesomeIcon icon={url === currentUrl ? faRedo : faSearch} />
       </button>
-      <IconButton
+      <a
         id="github"
-        edge="end"
-        component="a"
         href="https://github.com/utkarshgupta137/youtube-playlist-manager"
+        rel="noreferrer"
+        target="_blank"
       >
-        <GitHubIcon />
-      </IconButton>
+        <FontAwesomeIcon icon={faGithub} />
+      </a>
     </div>
   );
 };

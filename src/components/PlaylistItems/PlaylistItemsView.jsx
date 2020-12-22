@@ -10,63 +10,32 @@ const PlaylistItemsView = ({ playlistItemsList }) => {
   const columns = useMemo(() => {
     return [
       {
-        Header: "Playlist Info",
-        columns: [
-          {
-            Header: "Position",
-            accessor: "snippet.position",
-          },
-          {
-            Header: "Added by",
-            accessor: "snippet.channelTitle",
-          },
-          {
-            Header: "Added on",
-            accessor: "snippet.publishedAt",
-          },
-        ],
+        Header: "Position",
+        accessor: "snippet.position",
       },
       {
-        Header: "Video Info",
-        columns: [
-          {
-            Header: "Title",
-            accessor: "video.snippet.title",
-          },
-          {
-            Header: "Channel Title",
-            accessor: "video.snippet.channelTitle",
-          },
-          {
-            Header: "Published on",
-            accessor: "video.snippet.publishedAt",
-          },
-          {
-            Header: "Duration",
-            accessor: "video.contentDetails.duration",
-          },
-        ],
+        Header: "Added by",
+        accessor: "snippet.channelTitle",
       },
       {
-        Header: "Video Statistics",
-        columns: [
-          {
-            Header: "View Count",
-            accessor: "video.statistics.viewCount",
-          },
-          {
-            Header: "Like Count",
-            accessor: "video.statistics.likeCount",
-          },
-          {
-            Header: "Dislike Count",
-            accessor: "video.statistics.dislikeCount",
-          },
-          {
-            Header: "Comment Count",
-            accessor: "video.statistics.commentCount",
-          },
-        ],
+        Header: "Added on",
+        accessor: "snippet.publishedAt",
+      },
+      {
+        Header: "Title",
+        accessor: "video.snippet.title",
+      },
+      {
+        Header: "Channel Title",
+        accessor: "video.snippet.channelTitle",
+      },
+      {
+        Header: "Published on",
+        accessor: "video.snippet.publishedAt",
+      },
+      {
+        Header: "Duration",
+        accessor: "video.contentDetails.duration",
       },
     ];
   }, []);

@@ -44,15 +44,16 @@ const fetchVideos = (result) => {
           playlistItem.video = response.result.items[i];
         });
 
-        return dispatch(
+        dispatch(
           listPlaylistItemsSuccess({
             playlistItemsList: result.items,
             playlistItemsToken: result.nextPageToken,
           })
         );
+        return true;
       })
       .catch((response) => {
-        return dispatch(
+        dispatch(
           listPlaylistItemsFailed({
             playlistItemsError: response,
           })
@@ -65,10 +66,11 @@ const fetchPlaylistItems = (playlistId) => {
   return async (dispatch) => {
     listPlaylistItems(playlistId)
       .then((response) => {
-        return dispatch(fetchVideos(response.result));
+        dispatch(fetchVideos(response.result));
+        return true;
       })
       .catch((response) => {
-        return dispatch(
+        dispatch(
           listPlaylistItemsFailed({
             playlistItemsError: response,
           })
