@@ -9,7 +9,7 @@ div .table {
     minmax(auto, 6rem) !important;
 
   border: 1px solid #ffffff;
-  grid-gap: 1px;
+  gap: 1px;
 
   overflow: auto;
 
