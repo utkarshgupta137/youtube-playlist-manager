@@ -1,6 +1,6 @@
 {
   "name": "youtube-playlist-manager",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "./src/index.jsx",
   "license": "MIT",
   "author": "Utkarsh Gupta <utkarshgupta137@gmail.com>",

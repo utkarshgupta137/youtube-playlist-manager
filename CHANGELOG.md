@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.5...v0.1.6) (2020-12-26)
+
+
+### Features
+
+* add table for channel info ([ec7a532](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/ec7a532708c018f947fc444f29e6ea94161748ec))
+* add table for playlist info ([6990275](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/69902750b59591c2effbb2658f0eeb489d27ef37))
+* support channel urls ([9198c7f](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/9198c7ff2f99df0ac7977d5f68005b55a6c31a13))
+
+
+### Bug Fixes
+
+* **api:** update API key ([0dc1e53](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/0dc1e53a4f36407f859644165f930502d9831abf))
+
 ### [0.1.5](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.4...v0.1.5) (2020-12-22)
 
 
