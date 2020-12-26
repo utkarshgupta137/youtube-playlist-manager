@@ -28,10 +28,14 @@ const { listPlaylistsSuccess, listPlaylistsFailed } = playlistsSlice.actions;
 
 const fetchPlaylists = {
   channelId: (channelId, pageToken) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
       listPlaylists
         .channelId(channelId, pageToken)
         .then((response) => {
+          if (response.result.prevPageToken) {
+            const { playlistsList } = getState().playlistsView;
+            response.result.items = playlistsList.concat(response.result.items);
+          }
           dispatch(
             listPlaylistsSuccess({
               playlistsList: response.result.items,
@@ -47,10 +51,14 @@ const fetchPlaylists = {
   },
 
   id: (playlistId, pageToken) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
       listPlaylists
         .id(playlistId, pageToken)
         .then((response) => {
+          if (response.result.prevPageToken) {
+            const { playlistsList } = getState().playlistsView;
+            response.result.items = playlistsList.concat(response.result.items);
+          }
           dispatch(
             listPlaylistsSuccess({
               playlistsList: response.result.items,

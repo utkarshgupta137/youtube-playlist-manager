@@ -12,11 +12,7 @@ const getURL = (url) => {
 const isChannelUrl = (url) => {
   const urlObj = getURL(url);
   if (urlObj) {
-    return (
-      urlObj.pathname.startsWith("/channel/") ||
-      urlObj.pathname.startsWith("/c/") ||
-      urlObj.pathname.startsWith("/user/")
-    );
+    return urlObj.pathname.startsWith("/channel/");
   }
   return false;
 };
@@ -27,14 +23,6 @@ const isPlaylistUrl = (url) => {
     return urlObj.searchParams.has("list");
   }
   return false;
-};
-
-const getChannelUrl = (id) => {
-  return `youtube.com/channel/${id}`;
-};
-
-const getPlaylistUrl = (id) => {
-  return `youtube.com/playlist?list=${id}`;
 };
 
 const getChannelId = (url) => {
@@ -53,11 +41,4 @@ const getPlaylistId = (url) => {
   return null;
 };
 
-export {
-  isChannelUrl,
-  isPlaylistUrl,
-  getChannelUrl,
-  getPlaylistUrl,
-  getChannelId,
-  getPlaylistId,
-};
+export { isChannelUrl, isPlaylistUrl, getChannelId, getPlaylistId };

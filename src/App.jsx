@@ -7,7 +7,12 @@ import PlaylistItemsView from "./components/PlaylistItems/PlaylistItemsView";
 import { fetchPlaylistItems } from "./components/PlaylistItems/playlistItemsState";
 import PlaylistsView from "./components/Playlists/PlaylistsView";
 import { fetchPlaylists } from "./components/Playlists/playlistsState";
-import { getPlaylistId, isPlaylistUrl } from "./utils/urlUtils";
+import {
+  getChannelId,
+  getPlaylistId,
+  isChannelUrl,
+  isPlaylistUrl,
+} from "./utils/urlUtils";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -16,7 +21,7 @@ const App = () => {
     return state.headerView;
   });
 
-  const { playlistsList } = useSelector((state) => {
+  const { playlistsList, playlistsToken } = useSelector((state) => {
     return state.playlistsView;
   });
 
@@ -26,7 +31,10 @@ const App = () => {
 
   const setUrl = useCallback(
     (newUrl) => {
-      if (isPlaylistUrl(newUrl)) {
+      if (isChannelUrl(newUrl)) {
+        dispatch(updateUrl({ url: newUrl }));
+        dispatch(fetchPlaylists.channelId(getChannelId(newUrl)));
+      } else if (isPlaylistUrl(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
         dispatch(fetchPlaylists.id(getPlaylistId(newUrl)));
         dispatch(fetchPlaylistItems(getPlaylistId(newUrl)));
@@ -34,6 +42,10 @@ const App = () => {
     },
     [dispatch]
   );
+
+  const fetchMorePlaylists = useCallback(() => {
+    dispatch(fetchPlaylists.channelId(getChannelId(url), playlistsToken));
+  }, [url, playlistsToken, dispatch]);
 
   const fetchMorePlaylistItems = useCallback(() => {
     dispatch(fetchPlaylistItems(getPlaylistId(url), playlistItemsToken));
@@ -45,8 +57,8 @@ const App = () => {
       {playlistsList.length > 0 && (
         <PlaylistsView
           playlistsList={playlistsList}
-          hasMore={false}
-          next={() => {}}
+          hasMore={!!playlistsToken}
+          next={fetchMorePlaylists}
         />
       )}
       {isPlaylistUrl(url) && playlistItemsList.length > 0 && (

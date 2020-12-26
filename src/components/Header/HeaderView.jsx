@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
-import { isPlaylistUrl } from "../../utils/urlUtils";
+import { isChannelUrl, isPlaylistUrl } from "../../utils/urlUtils";
 import "./HeaderView.css";
 
 const HeaderView = ({ url, setUrl }) => {
@@ -30,7 +30,7 @@ const HeaderView = ({ url, setUrl }) => {
   };
 
   useEffect(() => {
-    if (isPlaylistUrl(currentUrl)) {
+    if (isChannelUrl(currentUrl) || isPlaylistUrl(currentUrl)) {
       setSearchDisabled(false);
     } else {
       setSearchDisabled(true);
@@ -45,7 +45,7 @@ const HeaderView = ({ url, setUrl }) => {
         value={currentUrl}
         onChange={onCurrentUrlChanged}
         onKeyDown={handleKeyDown}
-        placeholder="Playlist URL"
+        placeholder="Channel or Playlist URL"
       />
       <button
         id="search"
