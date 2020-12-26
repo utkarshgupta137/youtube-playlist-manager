@@ -1,13 +1,4 @@
 div .table {
-  grid-template-columns:
-    minmax(auto, 6rem)
-    minmax(8rem, auto)
-    minmax(auto, 8rem)
-    minmax(24rem, auto)
-    minmax(12rem, auto)
-    minmax(auto, 8rem)
-    minmax(auto, 6rem) !important;
-
   border: 1px solid #ffffff;
   gap: 1px;
 

@@ -16,10 +16,12 @@ import storage from "redux-persist/lib/storage";
 
 import headerState from "./components/Header/headerState";
 import playlistItemsState from "./components/PlaylistItems/playlistItemsState";
+import playlistsState from "./components/Playlists/playlistsState";
 
 const rootReducer = combineReducers({
   headerView: headerState,
   playlistItemsView: playlistItemsState,
+  playlistsView: playlistsState,
 });
 
 const persistConfig = {

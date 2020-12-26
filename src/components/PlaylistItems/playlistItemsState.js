@@ -4,8 +4,8 @@ import { listPlaylistItems, listVideos } from "../../api/apiHandler";
 
 const initialState = {
   playlistItemsList: [],
-  playlistItemsError: {},
   playlistItemsToken: "",
+  playlistItemsError: {},
 };
 
 const playlistItemsSlice = createSlice({

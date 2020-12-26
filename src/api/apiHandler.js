@@ -64,22 +64,33 @@ async function listChannels(forUsername, pageToken) {
   });
 }
 
-async function listPlaylists(channelId, pageToken) {
-  if (channelId === "mine") {
+const listPlaylists = {
+  channelId: async (channelId, pageToken) => {
+    if (channelId === "mine") {
+      return gapi.client.youtube.playlists.list({
+        part: ["snippet,contentDetails"],
+        maxResults: 50,
+        mine: true,
+        pageToken,
+      });
+    }
     return gapi.client.youtube.playlists.list({
       part: ["snippet,contentDetails"],
       maxResults: 50,
-      mine: true,
+      channelId,
       pageToken,
     });
-  }
-  return gapi.client.youtube.playlists.list({
-    part: ["snippet,contentDetails"],
-    maxResults: 50,
-    channelId,
-    pageToken,
-  });
-}
+  },
+
+  id: async (id, pageToken) => {
+    return gapi.client.youtube.playlists.list({
+      part: ["snippet,contentDetails"],
+      maxResults: 50,
+      id,
+      pageToken,
+    });
+  },
+};
 
 async function listPlaylistItems(playlistId, pageToken) {
   return gapi.client.youtube.playlistItems.list({

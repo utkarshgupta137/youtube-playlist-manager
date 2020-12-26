@@ -11,6 +11,8 @@ import store from "./store";
 import "./index.css";
 
 const persistor = persistStore(store);
+// persistor.purge();
+// persistor.pause();
 
 initClient()
   .then(() => {
