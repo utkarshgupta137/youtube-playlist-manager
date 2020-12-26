@@ -5,8 +5,8 @@ const discoveryDocs = [
 ];
 const scope = "https://www.googleapis.com/auth/youtube.readonly";
 
-let GoogleAuth;
-let GoogleUser;
+let googleAuth;
+let googleUser;
 let isAuthorized;
 
 function getAuthStatus() {
@@ -14,8 +14,8 @@ function getAuthStatus() {
 }
 
 function updateAuthStatus() {
-  GoogleUser = GoogleAuth.currentUser.get();
-  isAuthorized = GoogleUser.hasGrantedScopes(scope);
+  googleUser = googleAuth.currentUser.get();
+  isAuthorized = googleUser.hasGrantedScopes(scope);
   return isAuthorized;
 }
 
@@ -29,8 +29,8 @@ function initClient() {
         scope,
       })
       .then(() => {
-        GoogleAuth = gapi.auth2.getAuthInstance();
-        GoogleAuth.isSignedIn.listen(updateAuthStatus);
+        googleAuth = gapi.auth2.getAuthInstance();
+        googleAuth.isSignedIn.listen(updateAuthStatus);
         return updateAuthStatus();
       });
   });
@@ -47,9 +47,9 @@ function initClient() {
 
 async function grantAuth() {
   if (isAuthorized) {
-    return GoogleUser;
+    return googleUser;
   }
-  return GoogleAuth.signIn();
+  return googleAuth.signIn();
 }
 
 async function listChannels(forUsername, pageToken) {
