@@ -14,11 +14,13 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+import channelsState from "./components/Channels/channelsState";
 import headerState from "./components/Header/headerState";
 import playlistItemsState from "./components/PlaylistItems/playlistItemsState";
 import playlistsState from "./components/Playlists/playlistsState";
 
 const rootReducer = combineReducers({
+  channelsView: channelsState,
   headerView: headerState,
   playlistItemsView: playlistItemsState,
   playlistsView: playlistsState,

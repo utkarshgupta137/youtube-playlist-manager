@@ -1,15 +1,14 @@
-div#playlists {
+div#channels {
   margin-bottom: -4rem;
 
   padding: 2rem;
   padding-bottom: 4rem;
 }
 
-div#playlists .table {
+div#channels .table {
   grid-template-columns:
     minmax(14rem, auto)
     8rem
-    minmax(24rem, auto)
-    minmax(20rem, auto)
+    minmax(44rem, auto)
     6rem !important;
 }

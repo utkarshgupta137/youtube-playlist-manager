@@ -15,8 +15,8 @@ const playlistItemsSlice = createSlice({
     listPlaylistItemsSuccess(state, action) {
       state.playlistItemsError = initialState.playlistItemsError;
 
-      state.playlistItemsList = action.payload.playlistItemsList;
-      state.playlistItemsToken = action.payload.playlistItemsToken;
+      state.playlistItemsList = action.payload.items;
+      state.playlistItemsToken = action.payload.nextPageToken;
     },
     listPlaylistItemsFailed(state, action) {
       state.playlistItemsError = action.payload;
@@ -45,12 +45,7 @@ const fetchVideos = (result) => {
           const { playlistItemsList } = getState().playlistItemsView;
           result.items = playlistItemsList.concat(result.items);
         }
-        dispatch(
-          listPlaylistItemsSuccess({
-            playlistItemsList: result.items,
-            playlistItemsToken: result.nextPageToken,
-          })
-        );
+        dispatch(listPlaylistItemsSuccess(result));
         return true;
       })
       .catch((response) => {

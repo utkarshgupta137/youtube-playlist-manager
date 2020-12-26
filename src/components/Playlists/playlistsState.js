@@ -15,8 +15,8 @@ const playlistsSlice = createSlice({
     listPlaylistsSuccess(state, action) {
       state.playlistsError = initialState.playlistsError;
 
-      state.playlistsList = action.payload.playlistsList;
-      state.playlistsToken = action.payload.playlistsToken;
+      state.playlistsList = action.payload.items;
+      state.playlistsToken = action.payload.nextPageToken;
     },
     listPlaylistsFailed(state, action) {
       state.playlistsError = action.payload;
@@ -25,6 +25,22 @@ const playlistsSlice = createSlice({
 });
 
 const { listPlaylistsSuccess, listPlaylistsFailed } = playlistsSlice.actions;
+
+const insertPlaylists = (playlistId, pageToken) => {
+  return async (dispatch, getState) => {
+    listPlaylists
+      .id(playlistId, pageToken)
+      .then((response) => {
+        const { playlistsList } = getState().playlistsView;
+        response.result.items = response.result.items.concat(playlistsList);
+        dispatch(listPlaylistsSuccess(response.result));
+        return true;
+      })
+      .catch((response) => {
+        dispatch(listPlaylistsFailed(response));
+      });
+  };
+};
 
 const fetchPlaylists = {
   channelId: (channelId, pageToken) => {
@@ -36,12 +52,7 @@ const fetchPlaylists = {
             const { playlistsList } = getState().playlistsView;
             response.result.items = playlistsList.concat(response.result.items);
           }
-          dispatch(
-            listPlaylistsSuccess({
-              playlistsList: response.result.items,
-              playlistsToken: response.result.nextPageToken,
-            })
-          );
+          dispatch(listPlaylistsSuccess(response.result));
           return true;
         })
         .catch((response) => {
@@ -59,12 +70,7 @@ const fetchPlaylists = {
             const { playlistsList } = getState().playlistsView;
             response.result.items = playlistsList.concat(response.result.items);
           }
-          dispatch(
-            listPlaylistsSuccess({
-              playlistsList: response.result.items,
-              playlistsToken: response.result.nextPageToken,
-            })
-          );
+          dispatch(listPlaylistsSuccess(response.result));
           return true;
         })
         .catch((response) => {
@@ -74,6 +80,6 @@ const fetchPlaylists = {
   },
 };
 
-export { fetchPlaylists };
+export { insertPlaylists, fetchPlaylists };
 
 export default playlistsSlice.reducer;

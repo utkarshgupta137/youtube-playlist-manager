@@ -18,7 +18,7 @@ const PlaylistsView = ({ playlistsList, hasMore, next }) => {
         accessor: "snippet.publishedAt",
       },
       {
-        Header: "Title",
+        Header: "Playlist title",
         accessor: "snippet.title",
       },
       {

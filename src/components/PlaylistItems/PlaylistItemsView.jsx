@@ -22,11 +22,11 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
         accessor: "snippet.publishedAt",
       },
       {
-        Header: "Title",
+        Header: "Video title",
         accessor: "video.snippet.title",
       },
       {
-        Header: "Channel Title",
+        Header: "Channel title",
         accessor: "video.snippet.channelTitle",
       },
       {
@@ -37,6 +37,22 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
         Header: "Duration",
         accessor: "video.contentDetails.duration",
       },
+      // {
+      //   Header: "View Count",
+      //   accessor: "video.statistics.viewCount",
+      // },
+      // {
+      //   Header: "Like Count",
+      //   accessor: "video.statistics.likeCount",
+      // },
+      // {
+      //   Header: "Dislike Count",
+      //   accessor: "video.statistics.dislikeCount",
+      // },
+      // {
+      //   Header: "Comment Count",
+      //   accessor: "video.statistics.commentCount",
+      // },
     ];
   }, []);
 

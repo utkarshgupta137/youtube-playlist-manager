@@ -52,14 +52,11 @@ async function grantAuth() {
   return googleAuth.signIn();
 }
 
-async function listChannels(forUsername, pageToken) {
-  if (forUsername === "mine") {
-    return forUsername;
-  }
+async function listChannels(id, pageToken) {
   return gapi.client.youtube.channels.list({
-    part: ["snippet,contentDetails"],
+    part: ["snippet,contentDetails,statistics"],
     maxResults: 50,
-    forUsername,
+    id,
     pageToken,
   });
 }

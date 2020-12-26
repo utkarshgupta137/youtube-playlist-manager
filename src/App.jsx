@@ -1,6 +1,8 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import ChannelsView from "./components/Channels/ChannelsView";
+import { fetchChannels } from "./components/Channels/channelsState";
 import HeaderView from "./components/Header/HeaderView";
 import { updateUrl } from "./components/Header/headerState";
 import PlaylistItemsView from "./components/PlaylistItems/PlaylistItemsView";
@@ -21,6 +23,10 @@ const App = () => {
     return state.headerView;
   });
 
+  const { channelsList } = useSelector((state) => {
+    return state.channelsView;
+  });
+
   const { playlistsList, playlistsToken } = useSelector((state) => {
     return state.playlistsView;
   });
@@ -33,6 +39,7 @@ const App = () => {
     (newUrl) => {
       if (isChannelUrl(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
+        dispatch(fetchChannels(getChannelId(newUrl)));
         dispatch(fetchPlaylists.channelId(getChannelId(newUrl)));
       } else if (isPlaylistUrl(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
@@ -54,6 +61,13 @@ const App = () => {
   return (
     <>
       <HeaderView url={url} setUrl={setUrl} />
+      {channelsList.length > 0 && isChannelUrl(url) && (
+        <ChannelsView
+          channelsList={channelsList}
+          hasMore={false}
+          next={() => {}}
+        />
+      )}
       {playlistsList.length > 0 && (
         <PlaylistsView
           playlistsList={playlistsList}
@@ -61,7 +75,7 @@ const App = () => {
           next={fetchMorePlaylists}
         />
       )}
-      {isPlaylistUrl(url) && playlistItemsList.length > 0 && (
+      {playlistItemsList.length > 0 && isPlaylistUrl(url) && (
         <PlaylistItemsView
           playlistItemsList={playlistItemsList}
           hasMore={!!playlistItemsToken}
