@@ -80,7 +80,7 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
   }, [playlistItemsList]);
 
   return (
-    <div id="playlistItems">
+    <div id="playlistItemsView">
       <Table columns={columns} data={data} hasMore={hasMore} next={next} />
     </div>
   );

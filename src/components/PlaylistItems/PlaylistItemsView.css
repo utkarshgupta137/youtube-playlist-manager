@@ -1,9 +1,9 @@
-div#playlistItems {
+div#playlistItemsView {
   padding: 2rem;
   padding-bottom: 4rem;
 }
 
-div#playlistItems .table {
+div#playlistItemsView .table {
   grid-template-columns:
     6rem
     minmax(8rem, auto)

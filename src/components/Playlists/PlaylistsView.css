@@ -1,11 +1,11 @@
-div#playlists {
+div#playlistsView {
   margin-bottom: -4rem;
 
   padding: 2rem;
   padding-bottom: 4rem;
 }
 
-div#playlists .table {
+div#playlistsView .table {
   grid-template-columns:
     minmax(14rem, auto)
     8rem

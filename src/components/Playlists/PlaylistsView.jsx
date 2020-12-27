@@ -44,7 +44,7 @@ const PlaylistsView = ({ playlistsList, hasMore, next }) => {
   }, [playlistsList]);
 
   return (
-    <div id="playlists">
+    <div id="playlistsView">
       <Table columns={columns} data={data} hasMore={hasMore} next={next} />
     </div>
   );

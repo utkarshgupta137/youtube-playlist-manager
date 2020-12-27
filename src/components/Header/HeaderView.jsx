@@ -38,7 +38,7 @@ const HeaderView = ({ url, setUrl }) => {
   }, [url, currentUrl]);
 
   return (
-    <div id="header">
+    <div id="headerView">
       <input
         id="url"
         type="text"

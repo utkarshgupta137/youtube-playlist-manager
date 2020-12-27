@@ -48,7 +48,7 @@ const ChannelsView = ({ channelsList, hasMore, next }) => {
   }, [channelsList]);
 
   return (
-    <div id="channels">
+    <div id="channelsView">
       <Table columns={columns} data={data} hasMore={hasMore} next={next} />
     </div>
   );

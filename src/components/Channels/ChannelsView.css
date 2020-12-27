@@ -1,11 +1,11 @@
-div#channels {
+div#channelsView {
   margin-bottom: -4rem;
 
   padding: 2rem;
   padding-bottom: 4rem;
 }
 
-div#channels .table {
+div#channelsView .table {
   grid-template-columns:
     minmax(14rem, auto)
     8rem
