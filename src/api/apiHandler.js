@@ -34,15 +34,6 @@ function initClient() {
         return updateAuthStatus();
       });
   });
-
-  return new Promise(function wait(resolve) {
-    if (gapi.client && gapi.client.youtube) {
-      return resolve();
-    }
-    return setTimeout(() => {
-      return wait(resolve);
-    }, 100);
-  });
 }
 
 async function grantAuth() {

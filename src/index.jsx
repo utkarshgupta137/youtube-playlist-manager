@@ -9,20 +9,15 @@ import store, { persistor } from "./store";
 
 import "./index.css";
 
-initClient()
-  .then(() => {
-    ReactDOM.render(
-      <React.StrictMode>
-        <Provider store={store}>
-          <PersistGate persistor={persistor}>
-            <App />
-          </PersistGate>
-        </Provider>
-      </React.StrictMode>,
-      document.getElementById("root")
-    );
-    return true;
-  })
-  .catch(() => {
-    return false;
-  });
+initClient();
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);
