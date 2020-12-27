@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { listChannels } from "../../api/apiHandler";
-import { insertPlaylists } from "../Playlists/playlistsSlice";
 
 const initialState = {
   channelsList: [],
@@ -16,7 +15,11 @@ const channelsSlice = createSlice({
     listChannelsSuccess(state, action) {
       state.channelsError = initialState.channelsError;
 
-      state.channelsList = action.payload.items;
+      if (action.payload.prevPageToken) {
+        state.channelsList = state.channelsList.concat(action.payload.items);
+      } else {
+        state.channelsList = action.payload.items;
+      }
       state.channelsToken = action.payload.nextPageToken;
     },
     listChannelsFailed(state, action) {
@@ -28,26 +31,14 @@ const channelsSlice = createSlice({
 const { listChannelsSuccess, listChannelsFailed } = channelsSlice.actions;
 
 const fetchChannels = (channelId, pageToken) => {
-  return async (dispatch, getState) => {
-    listChannels(channelId, pageToken)
-      .then((response) => {
-        const relatedPlaylists = response.result.items.map((channel) => {
-          return Object.values(channel.contentDetails.relatedPlaylists)
-            .filter(Boolean)
-            .reverse();
-        });
-        dispatch(insertPlaylists(relatedPlaylists));
+  return async (dispatch) => {
+    const response = await listChannels(channelId, pageToken);
 
-        if (response.result.prevPageToken) {
-          const { channelsList } = getState().channelsView;
-          response.result.items = channelsList.concat(response.result.items);
-        }
-        dispatch(listChannelsSuccess(response.result));
-        return true;
-      })
-      .catch((response) => {
-        dispatch(listChannelsFailed(response));
-      });
+    if (response.result.items) {
+      dispatch(listChannelsSuccess(response.result));
+    } else {
+      dispatch(listChannelsFailed(response));
+    }
   };
 };
 

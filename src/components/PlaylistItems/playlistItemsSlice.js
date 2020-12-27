@@ -15,7 +15,13 @@ const playlistItemsSlice = createSlice({
     listPlaylistItemsSuccess(state, action) {
       state.playlistItemsError = initialState.playlistItemsError;
 
-      state.playlistItemsList = action.payload.items;
+      if (action.payload.prevPageToken) {
+        state.playlistItemsList = state.playlistItemsList.concat(
+          action.payload.items
+        );
+      } else {
+        state.playlistItemsList = action.payload.items;
+      }
       state.playlistItemsToken = action.payload.nextPageToken;
     },
     listPlaylistItemsFailed(state, action) {
@@ -30,40 +36,33 @@ const {
 } = playlistItemsSlice.actions;
 
 const fetchVideos = (result) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     const ids = result.items.map((playlistItem) => {
       return playlistItem.snippet.resourceId.videoId;
     });
+    const response = await listVideos(ids);
 
-    listVideos(ids)
-      .then((response) => {
-        result.items.forEach((playlistItem, i) => {
-          playlistItem.video = response.result.items[i];
-        });
-
-        if (result.prevPageToken) {
-          const { playlistItemsList } = getState().playlistItemsView;
-          result.items = playlistItemsList.concat(result.items);
-        }
-        dispatch(listPlaylistItemsSuccess(result));
-        return true;
-      })
-      .catch((response) => {
-        dispatch(listPlaylistItemsFailed(response));
+    if (response.result.items) {
+      result.items.forEach((playlistItem, i) => {
+        playlistItem.video = response.result.items[i];
       });
+
+      dispatch(listPlaylistItemsSuccess(result));
+    } else {
+      dispatch(listPlaylistItemsFailed(response));
+    }
   };
 };
 
 const fetchPlaylistItems = (playlistId, pageToken) => {
   return async (dispatch) => {
-    listPlaylistItems(playlistId, pageToken)
-      .then((response) => {
-        dispatch(fetchVideos(response.result));
-        return true;
-      })
-      .catch((response) => {
-        dispatch(listPlaylistItemsFailed(response));
-      });
+    const response = await listPlaylistItems(playlistId, pageToken);
+
+    if (response.result.items) {
+      dispatch(fetchVideos(response.result));
+    } else {
+      dispatch(listPlaylistItemsFailed(response));
+    }
   };
 };
 

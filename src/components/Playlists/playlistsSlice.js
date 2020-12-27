@@ -15,7 +15,11 @@ const playlistsSlice = createSlice({
     listPlaylistsSuccess(state, action) {
       state.playlistsError = initialState.playlistsError;
 
-      state.playlistsList = action.payload.items;
+      if (action.payload.prevPageToken) {
+        state.playlistsList = state.playlistsList.concat(action.payload.items);
+      } else {
+        state.playlistsList = action.payload.items;
+      }
       state.playlistsToken = action.payload.nextPageToken;
     },
     listPlaylistsFailed(state, action) {
@@ -26,60 +30,32 @@ const playlistsSlice = createSlice({
 
 const { listPlaylistsSuccess, listPlaylistsFailed } = playlistsSlice.actions;
 
-const insertPlaylists = (playlistId, pageToken) => {
-  return async (dispatch, getState) => {
-    listPlaylists
-      .id(playlistId, pageToken)
-      .then((response) => {
-        const { playlistsList } = getState().playlistsView;
-        response.result.items = response.result.items.concat(playlistsList);
-        dispatch(listPlaylistsSuccess(response.result));
-        return true;
-      })
-      .catch((response) => {
-        dispatch(listPlaylistsFailed(response));
-      });
-  };
-};
-
 const fetchPlaylists = {
   channelId: (channelId, pageToken) => {
-    return async (dispatch, getState) => {
-      listPlaylists
-        .channelId(channelId, pageToken)
-        .then((response) => {
-          if (response.result.prevPageToken) {
-            const { playlistsList } = getState().playlistsView;
-            response.result.items = playlistsList.concat(response.result.items);
-          }
-          dispatch(listPlaylistsSuccess(response.result));
-          return true;
-        })
-        .catch((response) => {
-          dispatch(listPlaylistsFailed(response));
-        });
+    return async (dispatch) => {
+      const response = await listPlaylists.channelId(channelId, pageToken);
+
+      if (response.result.items) {
+        dispatch(listPlaylistsSuccess(response.result));
+      } else {
+        dispatch(listPlaylistsFailed(response));
+      }
     };
   },
 
-  id: (playlistId, pageToken) => {
-    return async (dispatch, getState) => {
-      listPlaylists
-        .id(playlistId, pageToken)
-        .then((response) => {
-          if (response.result.prevPageToken) {
-            const { playlistsList } = getState().playlistsView;
-            response.result.items = playlistsList.concat(response.result.items);
-          }
-          dispatch(listPlaylistsSuccess(response.result));
-          return true;
-        })
-        .catch((response) => {
-          dispatch(listPlaylistsFailed(response));
-        });
+  playlistId: (playlistId, pageToken) => {
+    return async (dispatch) => {
+      const response = await listPlaylists.playlistId(playlistId, pageToken);
+
+      if (response.result.items) {
+        dispatch(listPlaylistsSuccess(response.result));
+      } else {
+        dispatch(listPlaylistsFailed(response));
+      }
     };
   },
 };
 
-export { insertPlaylists, fetchPlaylists };
+export { fetchPlaylists };
 
 export default playlistsSlice.reducer;

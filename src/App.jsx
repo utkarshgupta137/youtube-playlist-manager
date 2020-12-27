@@ -43,7 +43,7 @@ const App = () => {
         dispatch(fetchPlaylists.channelId(getChannelId(newUrl)));
       } else if (isPlaylistUrl(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
-        dispatch(fetchPlaylists.id(getPlaylistId(newUrl)));
+        dispatch(fetchPlaylists.playlistId(getPlaylistId(newUrl)));
         dispatch(fetchPlaylistItems(getPlaylistId(newUrl)));
       }
     },

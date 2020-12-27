@@ -43,17 +43,17 @@ async function grantAuth() {
   return googleAuth.signIn();
 }
 
-async function listChannels(id, pageToken) {
+const listChannels = (id, pageToken) => {
   return gapi.client.youtube.channels.list({
     part: ["snippet,contentDetails,statistics"],
     maxResults: 50,
     id,
     pageToken,
   });
-}
+};
 
 const listPlaylists = {
-  channelId: async (channelId, pageToken) => {
+  channelId: (channelId, pageToken) => {
     if (channelId === "mine") {
       return gapi.client.youtube.playlists.list({
         part: ["snippet,contentDetails"],
@@ -62,6 +62,7 @@ const listPlaylists = {
         pageToken,
       });
     }
+
     return gapi.client.youtube.playlists.list({
       part: ["snippet,contentDetails"],
       maxResults: 50,
@@ -70,7 +71,7 @@ const listPlaylists = {
     });
   },
 
-  id: async (id, pageToken) => {
+  playlistId: (id, pageToken) => {
     return gapi.client.youtube.playlists.list({
       part: ["snippet,contentDetails"],
       maxResults: 50,
@@ -80,23 +81,23 @@ const listPlaylists = {
   },
 };
 
-async function listPlaylistItems(playlistId, pageToken) {
+const listPlaylistItems = (playlistId, pageToken) => {
   return gapi.client.youtube.playlistItems.list({
     part: ["snippet"],
     maxResults: 50,
     playlistId,
     pageToken,
   });
-}
+};
 
-async function listVideos(id, pageToken) {
+const listVideos = (id, pageToken) => {
   return gapi.client.youtube.videos.list({
     part: ["snippet,contentDetails,statistics"],
     maxResults: 50,
     id,
     pageToken,
   });
-}
+};
 
 export {
   getAuthStatus,
