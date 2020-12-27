@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  url: "https://www.youtube.com/channel/UCHnyfMqiRRG1u-2MsSQLbXA",
+  url: "https://www.youtube.com/channel/mine",
 };
 
 const headerSlice = createSlice({

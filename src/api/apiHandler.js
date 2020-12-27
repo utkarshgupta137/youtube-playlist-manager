@@ -7,43 +7,46 @@ const scope = "https://www.googleapis.com/auth/youtube.readonly";
 
 let googleAuth;
 let googleUser;
-let isAuthorized;
+let isAuthorized = false;
 
-function getAuthStatus() {
-  return isAuthorized;
-}
-
-function updateAuthStatus() {
-  googleUser = googleAuth.currentUser.get();
-  isAuthorized = googleUser.hasGrantedScopes(scope);
-  return isAuthorized;
-}
-
-function initClient() {
-  gapi.load("client:auth2", () => {
-    return gapi.client
-      .init({
-        apiKey,
-        clientId,
-        discoveryDocs,
-        scope,
-      })
-      .then(() => {
-        googleAuth = gapi.auth2.getAuthInstance();
-        googleAuth.isSignedIn.listen(updateAuthStatus);
-        return updateAuthStatus();
-      });
-  });
-}
-
-async function grantAuth() {
+const getAuth = () => {
   if (isAuthorized) {
     return googleUser;
   }
   return googleAuth.signIn();
-}
+};
 
-const listChannels = (id, pageToken) => {
+const initClient = () => {
+  gapi.load("client:auth2", async () => {
+    await gapi.client.init({
+      apiKey,
+      clientId,
+      discoveryDocs,
+      scope,
+    });
+
+    googleAuth = gapi.auth2.getAuthInstance();
+    const updateAuthStatus = () => {
+      googleUser = googleAuth.currentUser.get();
+      isAuthorized = googleUser.hasGrantedScopes(scope);
+    };
+
+    googleAuth.isSignedIn.listen(updateAuthStatus);
+    updateAuthStatus();
+  });
+};
+
+const listChannels = async (id, pageToken) => {
+  if (id === "mine") {
+    await getAuth();
+    return gapi.client.youtube.channels.list({
+      part: ["snippet,contentDetails,statistics"],
+      maxResults: 50,
+      mine: true,
+      pageToken,
+    });
+  }
+
   return gapi.client.youtube.channels.list({
     part: ["snippet,contentDetails,statistics"],
     maxResults: 50,
@@ -53,8 +56,9 @@ const listChannels = (id, pageToken) => {
 };
 
 const listPlaylists = {
-  channelId: (channelId, pageToken) => {
+  channelId: async (channelId, pageToken) => {
     if (channelId === "mine") {
+      await getAuth();
       return gapi.client.youtube.playlists.list({
         part: ["snippet,contentDetails"],
         maxResults: 50,
@@ -100,8 +104,6 @@ const listVideos = (id, pageToken) => {
 };
 
 export {
-  getAuthStatus,
-  grantAuth,
   initClient,
   listChannels,
   listPlaylists,
