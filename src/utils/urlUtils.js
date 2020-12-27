@@ -9,12 +9,22 @@ const getURL = (url) => {
   }
 };
 
+const channelRegExp = new RegExp(/^\/channel\/([\w-]+)$/);
+
 const isChannelUrl = (url) => {
   const urlObj = getURL(url);
   if (urlObj) {
-    return urlObj.pathname.startsWith("/channel/");
+    return channelRegExp.test(urlObj.pathname);
   }
   return false;
+};
+
+const getChannelId = (url) => {
+  const urlObj = getURL(url);
+  if (urlObj) {
+    return channelRegExp.exec(urlObj.pathname)[1];
+  }
+  return null;
 };
 
 const isPlaylistUrl = (url) => {
@@ -25,14 +35,6 @@ const isPlaylistUrl = (url) => {
   return false;
 };
 
-const getChannelId = (url) => {
-  const urlObj = getURL(url);
-  if (urlObj) {
-    return urlObj.pathname.split("/").slice(-1)[0];
-  }
-  return null;
-};
-
 const getPlaylistId = (url) => {
   const urlObj = getURL(url);
   if (urlObj) {
@@ -41,4 +43,4 @@ const getPlaylistId = (url) => {
   return null;
 };
 
-export { isChannelUrl, isPlaylistUrl, getChannelId, getPlaylistId };
+export { isChannelUrl, getChannelId, isPlaylistUrl, getPlaylistId };
