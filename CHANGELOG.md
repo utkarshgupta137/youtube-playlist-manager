@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.6...v0.1.7) (2020-12-27)
+
+
+### Features
+
+* **api:** support fetching user playlists ([10726aa](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/10726aad9b4eecfcb460c086fd71c0b9116f4c2f))
+
+
+### Bug Fixes
+
+* **url:** use RegExp for isChannelUrl/getChannelId ([fce1068](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/fce1068f097b1106472a62ae61509562755e2222))
+
 ### [0.1.6](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.5...v0.1.6) (2020-12-26)
 
 
