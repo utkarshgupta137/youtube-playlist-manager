@@ -1,18 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
 import App from "./App";
 import { initClient } from "./api/apiHandler";
-import store from "./store";
+import store, { persistor } from "./store";
 
 import "./index.css";
-
-const persistor = persistStore(store);
-// persistor.purge();
-// persistor.pause();
 
 initClient()
   .then(() => {

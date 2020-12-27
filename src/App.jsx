@@ -2,13 +2,13 @@ import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChannelsView from "./components/Channels/ChannelsView";
-import { fetchChannels } from "./components/Channels/channelsState";
+import { fetchChannels } from "./components/Channels/channelsSlice";
 import HeaderView from "./components/Header/HeaderView";
-import { updateUrl } from "./components/Header/headerState";
+import { updateUrl } from "./components/Header/headerSlice";
 import PlaylistItemsView from "./components/PlaylistItems/PlaylistItemsView";
-import { fetchPlaylistItems } from "./components/PlaylistItems/playlistItemsState";
+import { fetchPlaylistItems } from "./components/PlaylistItems/playlistItemsSlice";
 import PlaylistsView from "./components/Playlists/PlaylistsView";
-import { fetchPlaylists } from "./components/Playlists/playlistsState";
+import { fetchPlaylists } from "./components/Playlists/playlistsSlice";
 import {
   getChannelId,
   getPlaylistId,

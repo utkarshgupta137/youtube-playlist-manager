@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { listChannels } from "../../api/apiHandler";
-import { insertPlaylists } from "../Playlists/playlistsState";
+import { insertPlaylists } from "../Playlists/playlistsSlice";
 
 const initialState = {
   channelsList: [],

@@ -1,29 +1,26 @@
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
-  configureStore,
-  combineReducers,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-import {
-  persistReducer,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
+  REHYDRATE,
+  persistReducer,
+  persistStore,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import channelsState from "./components/Channels/channelsState";
-import headerState from "./components/Header/headerState";
-import playlistItemsState from "./components/PlaylistItems/playlistItemsState";
-import playlistsState from "./components/Playlists/playlistsState";
+import channelsReducer from "./components/Channels/channelsSlice";
+import headerReducer from "./components/Header/headerSlice";
+import playlistItemsReducer from "./components/PlaylistItems/playlistItemsSlice";
+import playlistsReducer from "./components/Playlists/playlistsSlice";
 
 const rootReducer = combineReducers({
-  channelsView: channelsState,
-  headerView: headerState,
-  playlistItemsView: playlistItemsState,
-  playlistsView: playlistsState,
+  channelsView: channelsReducer,
+  headerView: headerReducer,
+  playlistItemsView: playlistItemsReducer,
+  playlistsView: playlistsReducer,
 });
 
 const persistConfig = {
@@ -36,11 +33,19 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE],
+      },
+    });
+  },
 });
 
+const persistor = persistStore(store);
+// persistor.purge();
+// persistor.pause();
+
 export default store;
+
+export { persistor };
