@@ -1,5 +1,6 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Flip, ToastContainer, toast } from "react-toastify";
 
 import ChannelsView from "./components/Channels/ChannelsView";
 import { fetchChannels } from "./components/Channels/channelsSlice";
@@ -11,6 +12,8 @@ import PlaylistsView from "./components/Playlists/PlaylistsView";
 import { fetchPlaylists } from "./components/Playlists/playlistsSlice";
 import { getChannelId, getPlaylistId } from "./utils/urlUtils";
 
+import "react-toastify/dist/ReactToastify.css";
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -18,13 +21,15 @@ const App = () => {
     return state.headerView;
   });
 
-  const { channelsList } = useSelector((state) => {
+  const { channelsList, channelsError } = useSelector((state) => {
     return state.channelsView;
   });
 
-  const { playlistsList, playlistsToken } = useSelector((state) => {
-    return state.playlistsView;
-  });
+  const { playlistsList, playlistsToken, playlistsError } = useSelector(
+    (state) => {
+      return state.playlistsView;
+    }
+  );
 
   const { playlistItemsList, playlistItemsToken } = useSelector((state) => {
     return state.playlistItemsView;
@@ -53,9 +58,33 @@ const App = () => {
     );
   }, [url, playlistItemsToken, dispatch]);
 
+  useEffect(() => {
+    if (channelsError.status === 200) {
+      toast.error("Channel not found");
+    } else if (channelsError.result) {
+      toast.error(channelsError.result.error.message);
+    }
+  }, [channelsError]);
+
+  useEffect(() => {
+    if (playlistsError.status === 200) {
+      toast.error("Playlist not found");
+    } else if (playlistsError.result) {
+      toast.error(playlistsError.result.error.message);
+    }
+  }, [playlistsError]);
+
   return (
     <>
       <HeaderView url={url} setUrl={setUrl} />
+      <ToastContainer
+        position="top-right"
+        transition={Flip}
+        autoClose={5000}
+        closeOnClick
+        pauseOnFocusLoss
+        pauseOnHover
+      />
       {getChannelId(url) && (
         <ChannelsView
           channelsList={channelsList}
