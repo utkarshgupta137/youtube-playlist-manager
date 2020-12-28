@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.7...v0.1.8) (2020-12-28)
+
+
+### Features
+
+* **api:** show error toasts ([cb6c731](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/cb6c73130e9141ffabbc14130741c4018e2d059a))
+* **user:** add signIn/signOut flow ([4b493d2](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/4b493d293799621dfc44140f47713fafaf582493))
+
+
+### Bug Fixes
+
+* **api:** re-add error handling ([54c8a7d](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/54c8a7d8b332ee392d9490093245e0dc4ca39b30))
+
 ### [0.1.7](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.6...v0.1.7) (2020-12-27)
 
 
