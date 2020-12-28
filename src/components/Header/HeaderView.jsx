@@ -2,17 +2,22 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faRedo, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { isChannelUrl, isPlaylistUrl } from "../../utils/urlUtils";
 import "./HeaderView.css";
 
 const HeaderView = ({ url, setUrl }) => {
   const [currentUrl, setCurrentUrl] = useState(url);
-  const [searchDisabled, setSearchDisabled] = useState(true);
+  const [searchDisabled, setSearchDisabled] = useState(false);
 
   const onCurrentUrlChanged = (e) => {
     setCurrentUrl(e.target.value);
+    if (isChannelUrl(e.target.value) || isPlaylistUrl(e.target.value)) {
+      setSearchDisabled(false);
+    } else {
+      setSearchDisabled(true);
+    }
   };
 
   const onSearchButtonClicked = () => {
@@ -28,14 +33,6 @@ const HeaderView = ({ url, setUrl }) => {
       onSearchButtonClicked();
     }
   };
-
-  useEffect(() => {
-    if (isChannelUrl(currentUrl) || isPlaylistUrl(currentUrl)) {
-      setSearchDisabled(false);
-    } else {
-      setSearchDisabled(true);
-    }
-  }, [url, currentUrl]);
 
   return (
     <div id="headerView">
