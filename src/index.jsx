@@ -9,7 +9,7 @@ import store, { persistor } from "./store";
 
 import "./index.css";
 
-initClient();
+initClient(store);
 
 ReactDOM.render(
   <React.StrictMode>

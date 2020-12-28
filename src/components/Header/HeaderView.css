@@ -8,6 +8,20 @@ div#headerView {
   background: #202020;
 }
 
+a#github {
+  grid-area: 1 / 1 / 4;
+  margin: auto;
+  margin-left: 0;
+
+  font-size: 1.5rem;
+
+  color: #ffffff;
+}
+
+a#github:hover {
+  color: #dddddd;
+}
+
 input#url {
   grid-area: 2 / 3;
 
@@ -25,7 +39,6 @@ button#search {
 
   border: 0.08rem solid #303030;
   border-left: 0;
-  padding: 0.275rem 0.25rem 0.275rem;
 
   font-size: 1rem;
 
@@ -42,12 +55,21 @@ button#search:disabled {
   background: #303030;
 }
 
-a#github {
+button#user {
   grid-area: 1 / 6 / 4;
   margin: auto;
   margin-right: 0;
 
+  border: 0;
+  padding: 0;
+
   font-size: 1.5rem;
 
+  background: #202020;
   color: #ffffff;
+  cursor: pointer;
+}
+
+button#user:hover {
+  color: #dddddd;
 }

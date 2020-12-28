@@ -1,4 +1,7 @@
 import to from "await-to-js";
+import cloneDeep from "lodash/cloneDeep";
+
+import { updateUser } from "../components/Header/headerSlice";
 
 import { apiKey, clientId } from "./client_secrets.json";
 
@@ -18,7 +21,15 @@ const getAuth = () => {
   return googleAuth.signIn();
 };
 
-const initClient = () => {
+const toggleUser = () => {
+  if (isAuthorized) {
+    googleAuth.signOut();
+  } else {
+    googleAuth.signIn();
+  }
+};
+
+const initClient = (store) => {
   gapi.load("client:auth2", async () => {
     await gapi.client.init({
       apiKey,
@@ -31,6 +42,11 @@ const initClient = () => {
     const updateAuthStatus = () => {
       googleUser = googleAuth.currentUser.get();
       isAuthorized = googleUser.hasGrantedScopes(scope);
+      store.dispatch(
+        updateUser({
+          user: cloneDeep({ googleUser, isAuthorized }),
+        })
+      );
     };
 
     googleAuth.isSignedIn.listen(updateAuthStatus);
@@ -126,6 +142,7 @@ const listVideos = {
 };
 
 export {
+  toggleUser,
   initClient,
   listChannels,
   listPlaylists,
