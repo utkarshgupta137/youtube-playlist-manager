@@ -1,46 +1,32 @@
-const getURL = (url) => {
-  try {
-    return new URL(url);
-  } catch (e) {
-    if (!url || url.startsWith("http://") || url.startsWith("https://")) {
-      return null;
-    }
-    return getURL(`https://${url}`);
+import memoize from "lodash/memoize";
+
+const getURLObj = (url) => {
+  if (url) {
+    try {
+      if (url.startsWith("http://") || url.startsWith("https://")) {
+        return new URL(url);
+      }
+      return new URL(`https://${url}`);
+    } catch (e) {}
   }
+  return null;
 };
 
 const channelRegExp = new RegExp(/^\/channel\/([\w-]+)$/);
-
-const isChannelUrl = (url) => {
-  const urlObj = getURL(url);
-  if (urlObj) {
-    return channelRegExp.test(urlObj.pathname);
-  }
-  return false;
-};
-
-const getChannelId = (url) => {
-  const urlObj = getURL(url);
-  if (urlObj) {
+const getChannelId = memoize((url) => {
+  const urlObj = getURLObj(url);
+  if (urlObj && channelRegExp.test(urlObj.pathname)) {
     return channelRegExp.exec(urlObj.pathname)[1];
   }
   return null;
-};
+});
 
-const isPlaylistUrl = (url) => {
-  const urlObj = getURL(url);
-  if (urlObj) {
-    return urlObj.searchParams.has("list");
-  }
-  return false;
-};
-
-const getPlaylistId = (url) => {
-  const urlObj = getURL(url);
-  if (urlObj) {
+const getPlaylistId = memoize((url) => {
+  const urlObj = getURLObj(url);
+  if (urlObj && urlObj.searchParams.has("list")) {
     return urlObj.searchParams.get("list");
   }
   return null;
-};
+});
 
-export { isChannelUrl, getChannelId, isPlaylistUrl, getPlaylistId };
+export { getChannelId, getPlaylistId };

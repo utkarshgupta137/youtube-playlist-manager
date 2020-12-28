@@ -9,12 +9,7 @@ import PlaylistItemsView from "./components/PlaylistItems/PlaylistItemsView";
 import { fetchPlaylistItems } from "./components/PlaylistItems/playlistItemsSlice";
 import PlaylistsView from "./components/Playlists/PlaylistsView";
 import { fetchPlaylists } from "./components/Playlists/playlistsSlice";
-import {
-  getChannelId,
-  getPlaylistId,
-  isChannelUrl,
-  isPlaylistUrl,
-} from "./utils/urlUtils";
+import { getChannelId, getPlaylistId } from "./utils/urlUtils";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -37,11 +32,11 @@ const App = () => {
 
   const setUrl = useCallback(
     (newUrl) => {
-      if (isChannelUrl(newUrl)) {
+      if (getChannelId(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
         dispatch(fetchChannels(getChannelId(newUrl)));
         dispatch(fetchPlaylists.channelId(getChannelId(newUrl)));
-      } else if (isPlaylistUrl(newUrl)) {
+      } else if (getPlaylistId(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
         dispatch(fetchPlaylists.playlistId(getPlaylistId(newUrl)));
         dispatch(fetchPlaylistItems(getPlaylistId(newUrl)));
@@ -61,7 +56,7 @@ const App = () => {
   return (
     <>
       <HeaderView url={url} setUrl={setUrl} />
-      {channelsList.length > 0 && isChannelUrl(url) && (
+      {channelsList.length > 0 && getChannelId(url) && (
         <ChannelsView
           channelsList={channelsList}
           hasMore={false}
@@ -75,7 +70,7 @@ const App = () => {
           next={fetchMorePlaylists}
         />
       )}
-      {playlistItemsList.length > 0 && isPlaylistUrl(url) && (
+      {playlistItemsList.length > 0 && getPlaylistId(url) && (
         <PlaylistItemsView
           playlistItemsList={playlistItemsList}
           hasMore={!!playlistItemsToken}
