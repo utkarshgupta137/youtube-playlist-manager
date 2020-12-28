@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { listChannels } from "../../api/apiHandler";
+import {
+  fetchPlaylists,
+  listPlaylistsFailed,
+} from "../Playlists/playlistsSlice";
 
 const initialState = {
   channelsList: [],
@@ -23,6 +27,9 @@ const channelsSlice = createSlice({
       state.channelsToken = action.payload.nextPageToken;
     },
     listChannelsFailed(state, action) {
+      state.channelsList = initialState.channelsList;
+      state.channelsToken = initialState.channelsToken;
+
       state.channelsError = action.payload;
     },
   },
@@ -30,16 +37,23 @@ const channelsSlice = createSlice({
 
 const { listChannelsSuccess, listChannelsFailed } = channelsSlice.actions;
 
-const fetchChannels = (channelId, pageToken) => {
-  return async (dispatch) => {
-    const response = await listChannels(channelId, pageToken);
+const fetchChannels = {
+  channelId: (channelId, pageToken) => {
+    return async (dispatch) => {
+      const [err, response] = await listChannels.channelId(
+        channelId,
+        pageToken
+      );
 
-    if (response.result.items) {
-      dispatch(listChannelsSuccess(response.result));
-    } else {
-      dispatch(listChannelsFailed(response));
-    }
-  };
+      if (!err && response.result.items && response.result.items.length > 0) {
+        dispatch(fetchPlaylists.channelId(channelId));
+        dispatch(listChannelsSuccess(response.result));
+      } else {
+        dispatch(listChannelsFailed(err || response));
+        dispatch(listPlaylistsFailed({}));
+      }
+    };
+  },
 };
 
 export { fetchChannels };

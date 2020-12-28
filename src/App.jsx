@@ -34,12 +34,10 @@ const App = () => {
     (newUrl) => {
       if (getChannelId(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
-        dispatch(fetchChannels(getChannelId(newUrl)));
-        dispatch(fetchPlaylists.channelId(getChannelId(newUrl)));
+        dispatch(fetchChannels.channelId(getChannelId(newUrl)));
       } else if (getPlaylistId(newUrl)) {
         dispatch(updateUrl({ url: newUrl }));
         dispatch(fetchPlaylists.playlistId(getPlaylistId(newUrl)));
-        dispatch(fetchPlaylistItems(getPlaylistId(newUrl)));
       }
     },
     [dispatch]
@@ -50,27 +48,29 @@ const App = () => {
   }, [url, playlistsToken, dispatch]);
 
   const fetchMorePlaylistItems = useCallback(() => {
-    dispatch(fetchPlaylistItems(getPlaylistId(url), playlistItemsToken));
+    dispatch(
+      fetchPlaylistItems.playlistId(getPlaylistId(url), playlistItemsToken)
+    );
   }, [url, playlistItemsToken, dispatch]);
 
   return (
     <>
       <HeaderView url={url} setUrl={setUrl} />
-      {channelsList.length > 0 && getChannelId(url) && (
+      {getChannelId(url) && (
         <ChannelsView
           channelsList={channelsList}
           hasMore={false}
           next={() => {}}
         />
       )}
-      {playlistsList.length > 0 && (
+      {(getChannelId(url) || getPlaylistId(url)) && (
         <PlaylistsView
           playlistsList={playlistsList}
           hasMore={!!playlistsToken}
           next={fetchMorePlaylists}
         />
       )}
-      {playlistItemsList.length > 0 && getPlaylistId(url) && (
+      {getPlaylistId(url) && (
         <PlaylistItemsView
           playlistItemsList={playlistItemsList}
           hasMore={!!playlistItemsToken}
