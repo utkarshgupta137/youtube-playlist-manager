@@ -1,4 +1,14 @@
+div.Toastify__toast-container {
+  margin-top: 4rem;
+}
+
 div#headerView {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
   display: grid;
   grid-template-columns: 3rem 1fr minmax(12rem, 48rem) 4rem 1fr 3rem;
   grid-template-rows: 0.5rem 2rem 0.5rem;

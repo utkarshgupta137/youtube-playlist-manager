@@ -1,7 +1,7 @@
 import {
   faSignInAlt,
   faSignOutAlt,
-  faUser,
+  faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
@@ -16,12 +16,21 @@ const UserView = ({ user, toggleUser }) => {
   const userPopout = useMemo(() => {
     let userInfo;
     if (user.isAuthorized) {
-      const profile = user.googleUser.getBasicProfile();
       userInfo = (
         <>
-          <img id="userImage" src={profile.getImageUrl()} alt="" />
-          <span id="userName">{profile.getName()}</span>
-          <span id="userEmail">{profile.getEmail()}</span>
+          <img id="userImage" src={user.image} alt="" />
+          <span id="userName">{user.name}</span>
+          <span id="userEmail">{user.email}</span>
+        </>
+      );
+    } else {
+      userInfo = (
+        <>
+          <span id="signInPrompt">
+            Sign in to access your
+            <br />
+            channel & private playlists.
+          </span>
         </>
       );
     }
@@ -29,17 +38,11 @@ const UserView = ({ user, toggleUser }) => {
     return (
       <div id="userPopout">
         {userInfo}
-        <Tooltip
-          placement="bottom"
-          trigger="hover"
-          overlay={user.isAuthorized ? "Sign out" : "Sign in"}
-        >
-          <button id="toggleUser" type="button" onClick={toggleUser}>
-            <FontAwesomeIcon
-              icon={user.isAuthorized ? faSignOutAlt : faSignInAlt}
-            />
-          </button>
-        </Tooltip>
+        <button id="toggleUser" type="button" onClick={toggleUser}>
+          <FontAwesomeIcon
+            icon={user.isAuthorized ? faSignOutAlt : faSignInAlt}
+          />
+        </button>
       </div>
     );
   }, [user, toggleUser]);
@@ -47,7 +50,7 @@ const UserView = ({ user, toggleUser }) => {
   return (
     <Tooltip placement="left" trigger="click" overlay={userPopout}>
       <button id="user" type="button">
-        <FontAwesomeIcon icon={faUser} />
+        <FontAwesomeIcon icon={faUserCircle} />
       </button>
     </Tooltip>
   );
@@ -55,8 +58,10 @@ const UserView = ({ user, toggleUser }) => {
 
 UserView.propTypes = {
   user: PropTypes.shape({
-    googleUser: PropTypes.shape.isRequired,
     isAuthorized: PropTypes.bool.isRequired,
+    name: PropTypes.string,
+    email: PropTypes.string,
+    image: PropTypes.string,
   }).isRequired,
   toggleUser: PropTypes.func.isRequired,
 };

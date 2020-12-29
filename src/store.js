@@ -18,14 +18,7 @@ import playlistsReducer from "./components/Playlists/playlistsSlice";
 
 const rootReducer = combineReducers({
   channelsView: channelsReducer,
-  headerView: persistReducer(
-    {
-      key: "headerView",
-      storage,
-      blacklist: ["user"],
-    },
-    headerReducer
-  ),
+  headerView: headerReducer,
   playlistItemsView: playlistItemsReducer,
   playlistsView: playlistsReducer,
 });
@@ -34,7 +27,6 @@ const persistedReducer = persistReducer(
   {
     key: "root",
     storage,
-    blacklist: ["headerView"],
   },
   rootReducer
 );

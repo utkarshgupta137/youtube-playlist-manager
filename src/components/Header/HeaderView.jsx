@@ -72,8 +72,10 @@ HeaderView.propTypes = {
   url: PropTypes.string.isRequired,
   setUrl: PropTypes.func.isRequired,
   user: PropTypes.shape({
-    googleUser: PropTypes.shape.isRequired,
     isAuthorized: PropTypes.bool.isRequired,
+    name: PropTypes.string,
+    email: PropTypes.string,
+    image: PropTypes.string,
   }).isRequired,
   toggleUser: PropTypes.func.isRequired,
 };

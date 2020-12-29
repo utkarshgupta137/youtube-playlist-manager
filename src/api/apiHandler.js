@@ -1,5 +1,4 @@
 import to from "await-to-js";
-import cloneDeep from "lodash/cloneDeep";
 
 import { updateUser } from "../components/Header/headerSlice";
 
@@ -13,13 +12,6 @@ const scope = "https://www.googleapis.com/auth/youtube.readonly";
 let googleAuth;
 let googleUser;
 let isAuthorized = false;
-
-const getAuth = () => {
-  if (isAuthorized) {
-    return googleUser;
-  }
-  return googleAuth.signIn();
-};
 
 const toggleUser = () => {
   if (isAuthorized) {
@@ -42,11 +34,15 @@ const initClient = (store) => {
     const updateAuthStatus = () => {
       googleUser = googleAuth.currentUser.get();
       isAuthorized = googleUser.hasGrantedScopes(scope);
-      store.dispatch(
-        updateUser({
-          user: cloneDeep({ googleUser, isAuthorized }),
-        })
-      );
+
+      const user = { isAuthorized };
+      if (isAuthorized) {
+        const profile = googleUser.getBasicProfile();
+        user.name = profile.getName();
+        user.email = profile.getEmail();
+        user.image = profile.getImageUrl();
+      }
+      store.dispatch(updateUser({ user }));
     };
 
     googleAuth.isSignedIn.listen(updateAuthStatus);
@@ -57,7 +53,6 @@ const initClient = (store) => {
 const listChannels = {
   channelId: async (id, pageToken) => {
     if (id === "mine") {
-      await getAuth();
       return to(
         gapi.client.youtube.channels.list({
           part: ["snippet,contentDetails,statistics"],
@@ -82,7 +77,6 @@ const listChannels = {
 const listPlaylists = {
   channelId: async (channelId, pageToken) => {
     if (channelId === "mine") {
-      await getAuth();
       return to(
         gapi.client.youtube.playlists.list({
           part: ["snippet,contentDetails"],

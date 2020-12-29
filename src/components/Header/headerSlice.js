@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   url: "https://www.youtube.com/channel/mine",
-  user: {},
+  user: {
+    isAuthorized: false,
+  },
 };
 
 const headerSlice = createSlice({

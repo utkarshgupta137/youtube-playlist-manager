@@ -60,32 +60,28 @@ const App = () => {
   }, [url, playlistItemsToken, dispatch]);
 
   useEffect(() => {
-    if (channelsError.status === 200) {
-      toast.error(
-        `Channel not found.${
-          user.isAuthorized
-            ? ""
-            : " If this is a private channel, try signing in."
-        }`
-      );
-    } else if (channelsError.result) {
-      toast.error(channelsError.result.error.message);
+    if (getChannelId(url)) {
+      if (channelsError.status === 200) {
+        toast.error("Channel not found. Check the URL.");
+      } else if (channelsError.status === 401) {
+        toast.error("You must sign in to access this channel.");
+      } else if (channelsError.result) {
+        toast.error(channelsError.result.error.message);
+      }
     }
-  }, [channelsError, user]);
+  }, [channelsError, url]);
 
   useEffect(() => {
-    if (playlistsError.status === 200) {
-      toast.error(
-        `Playlist not found.${
-          user.isAuthorized
-            ? ""
-            : " If this is a private playlist, try signing in."
-        }`
-      );
-    } else if (playlistsError.result) {
-      toast.error(playlistsError.result.error.message);
+    if (getPlaylistId(url)) {
+      if (playlistsError.status === 200) {
+        toast.error("Playlist not found. Check the URL.");
+      } else if (playlistsError.status === 401) {
+        toast.error("You must sign in to access this playlist.");
+      } else if (playlistsError.result) {
+        toast.error(playlistsError.result.error.message);
+      }
     }
-  }, [playlistsError, user]);
+  }, [playlistsError, url]);
 
   return (
     <>
