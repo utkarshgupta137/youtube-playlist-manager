@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.8...v0.1.9) (2021-01-01)
+
+
+### Bug Fixes
+
+* **user:** improve user flow ([35ff778](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/35ff7789993efc7e5b0fd89206456a750b8a6b74))
+
 ### [0.1.8](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.7...v0.1.8) (2020-12-28)
 
 
