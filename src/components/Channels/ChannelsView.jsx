@@ -12,6 +12,17 @@ const ChannelsView = ({ channelsList, hasMore, next }) => {
       {
         Header: "Channel title",
         accessor: "snippet.title",
+        Cell: (e) => {
+          return (
+            <a
+              href={`https://youtube.com/channel/${e.row.original.id}`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {e.value}
+            </a>
+          );
+        },
       },
       {
         Header: "Created on",
@@ -56,8 +67,13 @@ const ChannelsView = ({ channelsList, hasMore, next }) => {
 
 ChannelsView.propTypes = {
   channelsList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  hasMore: PropTypes.bool.isRequired,
-  next: PropTypes.func.isRequired,
+  hasMore: PropTypes.bool,
+  next: PropTypes.func,
+};
+
+ChannelsView.defaultProps = {
+  hasMore: false,
+  next: () => {},
 };
 
 export default ChannelsView;

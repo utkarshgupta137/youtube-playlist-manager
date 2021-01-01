@@ -42,11 +42,7 @@ const PlaylistsPage = () => {
 
   return (
     <>
-      <PlaylistsView
-        playlistsList={playlistsList}
-        hasMore={false}
-        next={() => {}}
-      />
+      <PlaylistsView playlistsList={playlistsList} />
       <PlaylistItemsView
         playlistItemsList={playlistItemsList}
         hasMore={!!playlistItemsToken}

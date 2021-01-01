@@ -1,17 +1,27 @@
 import cloneDeep from "lodash/cloneDeep";
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
 
 import Table from "../Table/Table";
 
 import "./PlaylistsView.css";
 
-const PlaylistsView = ({ playlistsList, hasMore, next }) => {
+const PlaylistsView = ({ playlistsList, hasMore, next, playlistsPage }) => {
   const columns = useMemo(() => {
     return [
       {
         Header: "Created by",
         accessor: "snippet.channelTitle",
+        Cell: (e) => {
+          return playlistsPage ? (
+            <Link to={`/channel/${e.row.original.snippet.channelId}`}>
+              {e.value}
+            </Link>
+          ) : (
+            e.value
+          );
+        },
       },
       {
         Header: "Published on",
@@ -20,6 +30,19 @@ const PlaylistsView = ({ playlistsList, hasMore, next }) => {
       {
         Header: "Playlist title",
         accessor: "snippet.title",
+        Cell: (e) => {
+          return playlistsPage ? (
+            <a
+              href={`https://www.youtube.com/playlist?list=${e.row.original.id}`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {e.value}
+            </a>
+          ) : (
+            <Link to={`/playlist/${e.row.original.id}`}>{e.value}</Link>
+          );
+        },
       },
       {
         Header: "Description",
@@ -30,7 +53,7 @@ const PlaylistsView = ({ playlistsList, hasMore, next }) => {
         accessor: "contentDetails.itemCount",
       },
     ];
-  }, []);
+  }, [playlistsPage]);
 
   const data = useMemo(() => {
     return cloneDeep(playlistsList).map((playlist) => {
@@ -52,8 +75,15 @@ const PlaylistsView = ({ playlistsList, hasMore, next }) => {
 
 PlaylistsView.propTypes = {
   playlistsList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  hasMore: PropTypes.bool.isRequired,
-  next: PropTypes.func.isRequired,
+  hasMore: PropTypes.bool,
+  next: PropTypes.func,
+  playlistsPage: PropTypes.bool,
+};
+
+PlaylistsView.defaultProps = {
+  hasMore: false,
+  next: () => {},
+  playlistsPage: true,
 };
 
 export default PlaylistsView;

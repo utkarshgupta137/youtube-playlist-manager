@@ -55,8 +55,13 @@ const Table = ({ columns, data, hasMore, next }) => {
 Table.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  hasMore: PropTypes.bool.isRequired,
-  next: PropTypes.func.isRequired,
+  hasMore: PropTypes.bool,
+  next: PropTypes.func,
+};
+
+Table.defaultProps = {
+  hasMore: false,
+  next: () => {},
 };
 
 export default Table;

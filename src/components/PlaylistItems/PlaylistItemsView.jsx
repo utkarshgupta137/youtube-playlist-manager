@@ -1,6 +1,7 @@
 import cloneDeep from "lodash/cloneDeep";
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
 
 import Table from "../Table/Table";
 
@@ -24,10 +25,28 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
       {
         Header: "Video title",
         accessor: "video.snippet.title",
+        Cell: (e) => {
+          return (
+            <a
+              href={`https://www.youtube.com/watch?v=${e.row.original.video.id}&list=${e.row.original.snippet.playlistId}&index=${e.row.original.snippet.position}`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {e.value}
+            </a>
+          );
+        },
       },
       {
         Header: "Channel title",
         accessor: "video.snippet.channelTitle",
+        Cell: (e) => {
+          return (
+            <Link to={`/channel/${e.row.original.video.snippet.channelId}`}>
+              {e.value}
+            </Link>
+          );
+        },
       },
       {
         Header: "Published on",
@@ -88,8 +107,13 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
 
 PlaylistItemsView.propTypes = {
   playlistItemsList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  hasMore: PropTypes.bool.isRequired,
-  next: PropTypes.func.isRequired,
+  hasMore: PropTypes.bool,
+  next: PropTypes.func,
+};
+
+PlaylistItemsView.defaultProps = {
+  hasMore: false,
+  next: () => {},
 };
 
 export default PlaylistItemsView;

@@ -42,15 +42,12 @@ const ChannelsPage = () => {
 
   return (
     <>
-      <ChannelsView
-        channelsList={channelsList}
-        hasMore={false}
-        next={() => {}}
-      />
+      <ChannelsView channelsList={channelsList} />
       <PlaylistsView
         playlistsList={playlistsList}
         hasMore={!!playlistsToken}
         next={fetchMorePlaylists}
+        playlistsPage={false}
       />
     </>
   );

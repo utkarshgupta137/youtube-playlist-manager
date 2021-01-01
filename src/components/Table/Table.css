@@ -23,6 +23,17 @@ div .table .cell {
   font-weight: 500;
 }
 
+div .table a {
+  font-weight: 700;
+
+  color: #55bbff;
+  text-decoration: none;
+}
+
+div .table a:visited {
+  color: #ff88ff;
+}
+
 div#loader {
   position: absolute;
   left: 50%;
