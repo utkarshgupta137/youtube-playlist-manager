@@ -55,7 +55,7 @@ const listChannels = {
     if (id === "mine") {
       return to(
         gapi.client.youtube.channels.list({
-          part: ["snippet,contentDetails,statistics"],
+          part: ["snippet,statistics"],
           maxResults: 50,
           mine: true,
           pageToken,
@@ -65,7 +65,7 @@ const listChannels = {
 
     return to(
       gapi.client.youtube.channels.list({
-        part: ["snippet,contentDetails,statistics"],
+        part: ["snippet,statistics"],
         maxResults: 50,
         id,
         pageToken,
