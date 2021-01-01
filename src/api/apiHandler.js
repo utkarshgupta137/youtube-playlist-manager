@@ -1,7 +1,5 @@
 import to from "await-to-js";
 
-import { updateUser } from "../components/Header/headerSlice";
-
 import { apiKey, clientId } from "./client_secrets.json";
 
 const discoveryDocs = [
@@ -21,7 +19,7 @@ const toggleUser = () => {
   }
 };
 
-const initClient = (store) => {
+const initClient = (setReady, setUser) => {
   gapi.load("client:auth2", async () => {
     await gapi.client.init({
       apiKey,
@@ -29,6 +27,7 @@ const initClient = (store) => {
       discoveryDocs,
       scope,
     });
+    setReady(true);
 
     googleAuth = gapi.auth2.getAuthInstance();
     const updateAuthStatus = () => {
@@ -42,7 +41,7 @@ const initClient = (store) => {
         user.email = profile.getEmail();
         user.image = profile.getImageUrl();
       }
-      store.dispatch(updateUser({ user }));
+      setUser(user);
     };
 
     googleAuth.isSignedIn.listen(updateAuthStatus);
@@ -51,7 +50,7 @@ const initClient = (store) => {
 };
 
 const listChannels = {
-  channelId: async (id, pageToken) => {
+  channelId: (id, pageToken) => {
     if (id === "mine") {
       return to(
         gapi.client.youtube.channels.list({
@@ -75,7 +74,7 @@ const listChannels = {
 };
 
 const listPlaylists = {
-  channelId: async (channelId, pageToken) => {
+  channelId: (channelId, pageToken) => {
     if (channelId === "mine") {
       return to(
         gapi.client.youtube.playlists.list({

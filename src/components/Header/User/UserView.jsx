@@ -8,8 +8,6 @@ import PropTypes from "prop-types";
 import Tooltip from "rc-tooltip";
 import React, { useMemo } from "react";
 
-import "rc-tooltip/assets/bootstrap.css";
-
 import "./UserView.css";
 
 const UserView = ({ user, toggleUser }) => {

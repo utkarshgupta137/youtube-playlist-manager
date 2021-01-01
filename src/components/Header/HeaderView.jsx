@@ -1,8 +1,9 @@
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faRedo, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { getChannelId, getPlaylistId } from "../../utils/urlUtils";
 
@@ -10,8 +11,10 @@ import UserView from "./User/UserView";
 
 import "./HeaderView.css";
 
-const HeaderView = ({ url, setUrl, user, toggleUser }) => {
-  const [currentUrl, setCurrentUrl] = useState(url);
+const HeaderView = ({ user, toggleUser }) => {
+  const history = useHistory();
+
+  const [currentUrl, setCurrentUrl] = useState("youtu.be/channel/mine");
   const [searchDisabled, setSearchDisabled] = useState(false);
 
   const onCurrentUrlChanged = (e) => {
@@ -24,11 +27,11 @@ const HeaderView = ({ url, setUrl, user, toggleUser }) => {
   };
 
   const onSearchButtonClicked = () => {
-    setUrl(currentUrl);
-    setSearchDisabled(true);
-    setTimeout(() => {
-      setSearchDisabled(false);
-    }, 3000);
+    if (getChannelId(currentUrl)) {
+      history.push(`/channel/${getChannelId(currentUrl)}`);
+    } else if (getPlaylistId(currentUrl)) {
+      history.push(`/playlist/${getPlaylistId(currentUrl)}`);
+    }
   };
 
   const handleKeyDown = (event) => {
@@ -61,7 +64,7 @@ const HeaderView = ({ url, setUrl, user, toggleUser }) => {
         disabled={searchDisabled}
         onClick={onSearchButtonClicked}
       >
-        <FontAwesomeIcon icon={url === currentUrl ? faRedo : faSearch} />
+        <FontAwesomeIcon icon={faSearch} />
       </button>
       <UserView user={user} toggleUser={toggleUser} />
     </div>
@@ -69,8 +72,6 @@ const HeaderView = ({ url, setUrl, user, toggleUser }) => {
 };
 
 HeaderView.propTypes = {
-  url: PropTypes.string.isRequired,
-  setUrl: PropTypes.func.isRequired,
   user: PropTypes.shape({
     isAuthorized: PropTypes.bool.isRequired,
     name: PropTypes.string,

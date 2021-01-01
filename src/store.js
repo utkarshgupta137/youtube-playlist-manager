@@ -11,22 +11,19 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import channelsReducer from "./components/Channels/channelsSlice";
-import headerReducer from "./components/Header/headerSlice";
-import playlistItemsReducer from "./components/PlaylistItems/playlistItemsSlice";
-import playlistsReducer from "./components/Playlists/playlistsSlice";
+import channelsReducer from "./containers/Channels/channelsSlice";
+import playlistsReducer from "./containers/Playlists/playlistsSlice";
 
 const rootReducer = combineReducers({
-  channelsView: channelsReducer,
-  headerView: headerReducer,
-  playlistItemsView: playlistItemsReducer,
-  playlistsView: playlistsReducer,
+  channelsPage: channelsReducer,
+  playlistsPage: playlistsReducer,
 });
 
 const persistedReducer = persistReducer(
   {
     key: "root",
     storage,
+    version: 0.2,
   },
   rootReducer
 );
