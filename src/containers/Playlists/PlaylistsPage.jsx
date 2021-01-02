@@ -1,52 +1,48 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import PlaylistItemsView from "../../components/PlaylistItems/PlaylistItemsView";
 import PlaylistsView from "../../components/Playlists/PlaylistsView";
 
-import { fetchPlaylists, fetchPlaylistItems } from "./playlistsSlice";
+import { usePlaylists, usePlaylistItems } from "./playlistsHooks";
 
 const PlaylistsPage = () => {
-  const dispatch = useDispatch();
   const { playlistId } = useParams();
-
-  useEffect(() => {
-    dispatch(fetchPlaylists(playlistId));
-    dispatch(fetchPlaylistItems(playlistId));
-  }, [playlistId, dispatch]);
-
+  const { data: playlistsList, error } = usePlaylists(playlistId);
   const {
-    playlistsError,
-    playlistsList,
-    playlistItemsList,
-    playlistItemsToken,
-  } = useSelector((state) => {
-    return state.playlistsPage;
-  });
+    data: playlistItemsList,
+    hasNextPage: hasMore,
+    fetchNextPage: next,
+  } = usePlaylistItems(playlistId);
 
   useEffect(() => {
-    if (playlistsError.status === 200) {
-      toast.error("Playlist not found. Check the URL.");
-    } else if (playlistsError.status === 401) {
-      toast.error("You must sign in to access this playlist.");
-    } else if (playlistsError.result) {
-      toast.error(playlistsError.result.error.message);
+    if (error) {
+      if (error.response.status === 200) {
+        toast.error("Playlist not found. Check the URL.", {
+          toastId: "PlaylistsPage",
+        });
+      } else if (error.response.status === 401) {
+        toast.error("You must sign in to access this playlist.", {
+          toastId: "PlaylistsPage",
+        });
+      } else if (error.response.result) {
+        toast.error(error.response.result.error.message, {
+          toastId: "PlaylistsPage",
+        });
+      }
+    } else {
+      toast.dismiss();
     }
-  }, [playlistsError]);
-
-  const fetchMorePlaylistItems = useCallback(() => {
-    dispatch(fetchPlaylistItems(playlistId, playlistItemsToken));
-  }, [playlistId, playlistItemsToken, dispatch]);
+  }, [error]);
 
   return (
     <>
-      <PlaylistsView playlistsList={playlistsList} />
+      <PlaylistsView playlistsList={playlistsList || []} />
       <PlaylistItemsView
         playlistItemsList={playlistItemsList}
-        hasMore={!!playlistItemsToken}
-        next={fetchMorePlaylistItems}
+        hasMore={hasMore}
+        next={next}
       />
     </>
   );

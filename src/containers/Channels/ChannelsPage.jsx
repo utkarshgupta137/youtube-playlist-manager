@@ -1,52 +1,48 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import ChannelsView from "../../components/Channels/ChannelsView";
 import PlaylistsView from "../../components/Playlists/PlaylistsView";
 
-import { fetchChannels, fetchPlaylists } from "./channelsSlice";
+import { useChannels, usePlaylists } from "./channelsHooks";
 
 const ChannelsPage = () => {
-  const dispatch = useDispatch();
   const { channelId } = useParams();
-
-  useEffect(() => {
-    dispatch(fetchChannels(channelId));
-    dispatch(fetchPlaylists(channelId));
-  }, [channelId, dispatch]);
-
+  const { data: channelsList, error } = useChannels(channelId);
   const {
-    channelsError,
-    channelsList,
-    playlistsList,
-    playlistsToken,
-  } = useSelector((state) => {
-    return state.channelsPage;
-  });
+    data: playlistsList,
+    hasNextPage: hasMore,
+    fetchNextPage: next,
+  } = usePlaylists(channelId);
 
   useEffect(() => {
-    if (channelsError.status === 200) {
-      toast.error("Channel not found. Check the URL.");
-    } else if (channelsError.status === 401) {
-      toast.error("You must sign in to access this channel.");
-    } else if (channelsError.result) {
-      toast.error(channelsError.result.error.message);
+    if (error) {
+      if (error.response.status === 200) {
+        toast.error("Channel not found. Check the URL.", {
+          toastId: "ChannelsPage",
+        });
+      } else if (error.response.status === 401) {
+        toast.error("You must sign in to access this channel.", {
+          toastId: "ChannelsPage",
+        });
+      } else if (error.response.result) {
+        toast.error(error.response.result.error.message, {
+          toastId: "ChannelsPage",
+        });
+      }
+    } else {
+      toast.dismiss();
     }
-  }, [channelsError]);
-
-  const fetchMorePlaylists = useCallback(() => {
-    dispatch(fetchPlaylists(channelId, playlistsToken));
-  }, [channelId, playlistsToken, dispatch]);
+  }, [error]);
 
   return (
     <>
-      <ChannelsView channelsList={channelsList} />
+      <ChannelsView channelsList={channelsList || []} />
       <PlaylistsView
         playlistsList={playlistsList}
-        hasMore={!!playlistsToken}
-        next={fetchMorePlaylists}
+        hasMore={hasMore}
+        next={next}
         playlistsPage={false}
       />
     </>
