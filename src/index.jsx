@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 // import { Provider } from "react-redux";
@@ -32,7 +33,9 @@ ReactDOM.render(
     {/* <PersistGate persistor={persistor}> */}
     <BrowserRouter basename="/youtube-playlist-manager/#">
       <QueryClientProvider client={queryClient}>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </BrowserRouter>

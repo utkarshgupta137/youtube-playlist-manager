@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -38,6 +39,18 @@ const ChannelsPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {channelsList
+            ? channelsList.map((channel, i) => {
+                return `${i === 0 ? "YPM | " : ""}${channel.snippet.title}${
+                  i < channelsList.length - 1 ? " | " : ""
+                }`;
+              })
+            : "YouTube Playlist Manager"}
+        </title>
+        <meta name="description" content="Helmet application" />
+      </Helmet>
       <ChannelsView channelsList={channelsList || []} />
       <PlaylistsView
         playlistsList={playlistsList}
