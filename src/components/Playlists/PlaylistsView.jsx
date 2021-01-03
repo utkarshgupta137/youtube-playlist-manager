@@ -1,6 +1,5 @@
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import cloneDeep from "lodash/cloneDeep";
 import PropTypes from "prop-types";
 import React, { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -9,53 +8,72 @@ import Table from "../Table/Table";
 
 import "./PlaylistsView.css";
 
-const PlaylistsView = ({ playlistsList, hasMore, next, playlistsPage }) => {
+const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
   const columns = useMemo(() => {
     return [
       {
-        Header: "Created by",
         accessor: "snippet.channelTitle",
+        aggregate: "unique",
+        disableGroupBy: false,
+        width: "minmax(14rem, auto)",
+        Header: "Created by",
+        Aggregated: (e) => {
+          return e.value.join(", ");
+        },
         Cell: (e) => {
-          return playlistsPage ? (
-            <Link to={`/channel/${e.row.original.snippet.channelId}`}>
-              {e.value}
-            </Link>
+          const row = e.row.original ?? e.row.subRows[0].original;
+          return row && playlistsPage ? (
+            <Link to={`/channel/${row.snippet.channelId}`}>{e.value}</Link>
           ) : (
             e.value
           );
         },
       },
       {
-        Header: "Published on",
-        accessor: "snippet.publishedAt",
+        accessor: (originalRow) => {
+          return originalRow.snippet.publishedAt.substring(0, 10);
+        },
+        aggregate: "firstLast",
+        width: "minmax(8rem, min-content)",
+        Header: "Created on",
       },
       {
-        Header: "Playlist title",
         accessor: "snippet.title",
+        width: "minmax(24rem, auto)",
+        Header: "Playlist title",
         Cell: (e) => {
-          return playlistsPage ? (
-            <a
-              href={`https://www.youtube.com/playlist?list=${e.row.original.id}`}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {e.value}
-            </a>
+          const row = e.row.original;
+          return row ? (
+            playlistsPage ? (
+              <a
+                href={`https://www.youtube.com/playlist?list=${e.row.original.id}`}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {e.value}
+              </a>
+            ) : (
+              <Link to={`/playlist/${e.row.original.id}`}>{e.value}</Link>
+            )
           ) : (
-            <Link to={`/playlist/${e.row.original.id}`}>{e.value}</Link>
+            e.value
           );
         },
       },
       {
-        Header: "Description",
         accessor: "snippet.description",
+        width: "minmax(18rem, auto)",
+        Header: "Description",
       },
       {
-        Header: "Videos",
         accessor: "contentDetails.itemCount",
+        aggregate: "sum",
+        width: "6rem",
+        Header: "Videos",
       },
       {
         id: "expander",
+        width: "2rem",
         Cell: (e) => {
           return (
             <span {...e.row.getToggleRowExpandedProps()}>
@@ -69,17 +87,6 @@ const PlaylistsView = ({ playlistsList, hasMore, next, playlistsPage }) => {
       },
     ];
   }, [playlistsPage]);
-
-  const data = useMemo(() => {
-    return cloneDeep(playlistsList).map((playlist) => {
-      playlist.snippet.publishedAt = playlist.snippet.publishedAt.substring(
-        0,
-        10
-      );
-
-      return playlist;
-    });
-  }, [playlistsList]);
 
   const renderExpanded = useCallback((row) => {
     return (
@@ -106,7 +113,7 @@ const PlaylistsView = ({ playlistsList, hasMore, next, playlistsPage }) => {
 };
 
 PlaylistsView.propTypes = {
-  playlistsList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   hasMore: PropTypes.bool,
   next: PropTypes.func,
   playlistsPage: PropTypes.bool,

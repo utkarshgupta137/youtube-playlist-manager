@@ -1,4 +1,3 @@
-import cloneDeep from "lodash/cloneDeep";
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
 
@@ -6,12 +5,13 @@ import Table from "../Table/Table";
 
 import "./ChannelsView.css";
 
-const ChannelsView = ({ channelsList, hasMore, next }) => {
+const ChannelsView = ({ data, hasMore, next }) => {
   const columns = useMemo(() => {
     return [
       {
-        Header: "Channel title",
         accessor: "snippet.title",
+        width: "minmax(14rem, auto)",
+        Header: "Channel title",
         Cell: (e) => {
           return (
             <a
@@ -25,38 +25,40 @@ const ChannelsView = ({ channelsList, hasMore, next }) => {
         },
       },
       {
+        accessor: (originalRow) => {
+          return originalRow.snippet.publishedAt.substring(0, 10);
+        },
+        width: "minmax(8rem, min-content)",
         Header: "Created on",
-        accessor: "snippet.publishedAt",
       },
       {
-        Header: "Description",
         accessor: "snippet.description",
+        width: "minmax(28rem, auto)",
+        Header: "Description",
       },
-      // {
-      //   Header: "Views",
-      //   accessor: "statistics.viewCount",
-      // },
-      // {
-      //   Header: "Subscribers",
-      //   accessor: "statistics.subscriberCount",
-      // },
       {
-        Header: "Videos",
+        Header: "Views",
+        width: "minmax(8rem, min-content)",
+        accessor: "statistics.viewCount",
+        Cell: (e) => {
+          return parseInt(e.value, 10).toLocaleString();
+        },
+      },
+      {
+        Header: "Subscribers",
+        width: "minmax(8rem, min-content)",
+        accessor: "statistics.subscriberCount",
+        Cell: (e) => {
+          return parseInt(e.value, 10).toLocaleString();
+        },
+      },
+      {
         accessor: "statistics.videoCount",
+        width: "6rem",
+        Header: "Videos",
       },
     ];
   }, []);
-
-  const data = useMemo(() => {
-    return cloneDeep(channelsList).map((channel) => {
-      channel.snippet.publishedAt = channel.snippet.publishedAt.substring(
-        0,
-        10
-      );
-
-      return channel;
-    });
-  }, [channelsList]);
 
   return (
     <div id="channelsView">
@@ -66,7 +68,7 @@ const ChannelsView = ({ channelsList, hasMore, next }) => {
 };
 
 ChannelsView.propTypes = {
-  channelsList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   hasMore: PropTypes.bool,
   next: PropTypes.func,
 };

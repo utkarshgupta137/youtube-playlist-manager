@@ -1,7 +1,9 @@
+import { faLayerGroup } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useExpanded, useGridLayout, useTable } from "react-table";
+import { useExpanded, useGridLayout, useGroupBy, useTable } from "react-table";
 
 import "./Table.css";
 
@@ -10,8 +12,32 @@ const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
     {
       columns,
       data,
+      defaultColumn: {
+        disableGroupBy: true,
+      },
+      stateReducer: (newState, action, prevState, instance) => {
+        const cols = instance.visibleColumns ?? instance.columns;
+        return {
+          ...newState,
+          gridLayout: {
+            columnWidths: cols.map((column) => {
+              return column.width || "auto";
+            }),
+          },
+        };
+      },
+      aggregations: {
+        firstLast: (leafValues) => {
+          const values = [...leafValues].sort();
+          if (values.length === 1) {
+            return values[0];
+          }
+          return `${values[0]}..${values.slice(-1)}`;
+        },
+      },
     },
     useGridLayout,
+    useGroupBy,
     useExpanded
   );
 
@@ -28,6 +54,16 @@ const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
             return (
               <div {...column.getHeaderProps()} className="header">
                 {column.render("Header")}
+                {column.canGroupBy ? (
+                  <span {...column.getGroupByToggleProps()}>
+                    <FontAwesomeIcon
+                      icon={faLayerGroup}
+                      color={column.isGrouped ? "#ff0000" : null}
+                      pull="right"
+                      style={{ marginTop: "0.1rem" }}
+                    />
+                  </span>
+                ) : null}
               </div>
             );
           });
@@ -39,7 +75,15 @@ const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
               {row.cells.map((cell) => {
                 return (
                   <div {...cell.getCellProps()} className="cell">
-                    {cell.render("Cell")}
+                    {cell.isGrouped ? (
+                      <>
+                        {cell.render("Cell")} ({row.subRows.length})
+                      </>
+                    ) : cell.isAggregated ? (
+                      cell.render("Aggregated")
+                    ) : cell.isPlaceholder ? null : (
+                      cell.render("Cell")
+                    )}
                   </div>
                 );
               })}

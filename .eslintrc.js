@@ -29,7 +29,7 @@ const eslintrc = {
         "newlines-between": "always",
       },
     ],
-    "no-console": "off",
+    "no-nested-ternary": "off",
     "no-param-reassign": [
       "error",
       {

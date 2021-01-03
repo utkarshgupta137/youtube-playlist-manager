@@ -44,9 +44,9 @@ const PlaylistsPage = () => {
         </title>
         <meta name="description" content="Helmet application" />
       </Helmet>
-      <PlaylistsView playlistsList={playlistsList || []} />
+      <PlaylistsView data={playlistsList || []} />
       <PlaylistItemsView
-        playlistItemsList={playlistItemsList}
+        data={playlistItemsList}
         hasMore={hasMore}
         next={next}
       />

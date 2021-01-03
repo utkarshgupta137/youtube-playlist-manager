@@ -1,6 +1,6 @@
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import cloneDeep from "lodash/cloneDeep";
+import { parse, toSeconds } from "iso8601-duration";
 import PropTypes from "prop-types";
 import React, { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -9,54 +9,100 @@ import Table from "../Table/Table";
 
 import "./PlaylistItemsView.css";
 
-const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
+const PlaylistItemsView = ({ data, hasMore, next }) => {
   const columns = useMemo(() => {
     return [
       {
+        accessor: (originalRow) => {
+          return originalRow.snippet.position + 1;
+        },
+        aggregate: "minMax",
+        width: "6rem",
         Header: "Position",
-        accessor: "snippet.position",
       },
       {
-        Header: "Added by",
         accessor: "snippet.channelTitle",
+        aggregate: "unique",
+        disableGroupBy: false,
+        width: "minmax(8rem, auto)",
+        Header: "Added by",
+        Aggregated: (e) => {
+          return e.value.join(", ");
+        },
       },
       {
+        accessor: (originalRow) => {
+          return originalRow.snippet.publishedAt.substring(0, 10);
+        },
+        aggregate: "firstLast",
+        width: "minmax(8rem, min-content)",
         Header: "Added on",
-        accessor: "snippet.publishedAt",
       },
       {
-        Header: "Video title",
         accessor: "video.snippet.title",
+        width: "minmax(24rem, auto)",
+        Header: "Video title",
         Cell: (e) => {
-          return (
+          const row = e.row.original;
+          return row ? (
             <a
-              href={`https://www.youtube.com/watch?v=${e.row.original.video.id}&list=${e.row.original.snippet.playlistId}&index=${e.row.original.snippet.position}`}
+              href={`https://www.youtube.com/watch?v=${row.video.id}&list=${row.snippet.playlistId}&index=${row.snippet.position}`}
               rel="noreferrer"
               target="_blank"
             >
               {e.value}
             </a>
+          ) : (
+            e.value
           );
         },
       },
       {
-        Header: "Channel title",
         accessor: "video.snippet.channelTitle",
+        aggregate: "unique",
+        disableGroupBy: false,
+        width: "minmax(10rem, auto)",
+        Header: "Created by",
         Cell: (e) => {
-          return (
-            <Link to={`/channel/${e.row.original.video.snippet.channelId}`}>
+          const row = e.row.original ?? e.row.subRows[0].original;
+          return row ? (
+            <Link to={`/channel/${row.video.snippet.channelId}`}>
               {e.value}
             </Link>
+          ) : (
+            e.value
           );
+        },
+        Aggregated: (e) => {
+          return e.value.join(", ");
         },
       },
       {
-        Header: "Published on",
-        accessor: "video.snippet.publishedAt",
+        accessor: (originalRow) => {
+          return originalRow.video.snippet.publishedAt.substring(0, 10);
+        },
+        aggregate: "firstLast",
+        width: "minmax(8rem, min-content)",
+        Header: "Created on",
       },
       {
+        accessor: (originalRow) => {
+          return toSeconds(parse(originalRow.video.contentDetails.duration));
+        },
+        aggregate: "sum",
+        width: "6rem",
         Header: "Duration",
-        accessor: "video.contentDetails.duration",
+        Cell: (e) => {
+          const hours = Math.floor(e.value / 3600);
+          const minutes = Math.floor(e.value / 60) % 60;
+          const seconds = e.value % 60;
+
+          return [hours, minutes, seconds]
+            .filter((v, i) => {
+              return v !== 0 || i > 0;
+            })
+            .join(":");
+        },
       },
       // {
       //   Header: "View Count",
@@ -76,6 +122,7 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
       // },
       {
         id: "expander",
+        width: "2rem",
         Cell: (e) => {
           return (
             <span {...e.row.getToggleRowExpandedProps()}>
@@ -90,38 +137,15 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
     ];
   }, []);
 
-  const data = useMemo(() => {
-    return cloneDeep(playlistItemsList).map((playlistItem) => {
-      playlistItem.snippet.position += 1;
-      playlistItem.snippet.publishedAt = playlistItem.snippet.publishedAt.substring(
-        0,
-        10
-      );
-
-      if (playlistItem.video) {
-        playlistItem.video.snippet.publishedAt = playlistItem.video.snippet.publishedAt.substring(
-          0,
-          10
-        );
-        playlistItem.video.contentDetails.duration = playlistItem.video.contentDetails.duration
-          .replace("P", "")
-          .replace("T", "")
-          .toLowerCase();
-      }
-
-      return playlistItem;
-    });
-  }, [playlistItemsList]);
-
   const renderExpanded = useCallback((row) => {
-    return (
+    return row.original ? (
       <div
         className="row"
         dangerouslySetInnerHTML={{
           __html: row.original.video.player.embedHtml,
         }}
       />
-    );
+    ) : null;
   }, []);
 
   return (
@@ -138,7 +162,7 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
 };
 
 PlaylistItemsView.propTypes = {
-  playlistItemsList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   hasMore: PropTypes.bool,
   next: PropTypes.func,
 };

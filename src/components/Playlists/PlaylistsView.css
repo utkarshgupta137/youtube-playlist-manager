@@ -5,16 +5,6 @@ div#playlistsView {
   padding-bottom: 4rem;
 }
 
-div#playlistsView .table {
-  grid-template-columns:
-    minmax(14rem, auto)
-    8rem
-    minmax(24rem, auto)
-    minmax(20rem, auto)
-    6rem
-    2rem !important;
-}
-
 div#playlistsView .table .row {
   grid-column: 1 / 7;
   text-align: center;

@@ -44,9 +44,9 @@ const ChannelsPage = () => {
         </title>
         <meta name="description" content="Helmet application" />
       </Helmet>
-      <ChannelsView channelsList={channelsList || []} />
+      <ChannelsView data={channelsList || []} />
       <PlaylistsView
-        playlistsList={playlistsList}
+        data={playlistsList}
         hasMore={hasMore}
         next={next}
         playlistsPage={false}
