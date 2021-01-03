@@ -15,7 +15,7 @@ const getURLObj = (url) => {
 const channelRegExp = new RegExp(/^\/channel\/([\w-]+)$/);
 const getChannelId = memoize((url) => {
   const urlObj = getURLObj(url);
-  if (urlObj && channelRegExp.test(urlObj.pathname)) {
+  if (channelRegExp.test(urlObj?.pathname)) {
     return channelRegExp.exec(urlObj.pathname)[1];
   }
   return null;
@@ -23,7 +23,7 @@ const getChannelId = memoize((url) => {
 
 const getPlaylistId = memoize((url) => {
   const urlObj = getURLObj(url);
-  if (urlObj && urlObj.searchParams.has("list")) {
+  if (urlObj?.searchParams.has("list")) {
     return urlObj.searchParams.get("list");
   }
   return null;

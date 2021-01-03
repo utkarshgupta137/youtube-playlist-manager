@@ -18,20 +18,13 @@ const PlaylistsPage = () => {
   } = usePlaylistItems(playlistId);
 
   useEffect(() => {
-    if (error) {
-      if (error.response.status === 200) {
-        toast.error("Playlist not found. Check the URL.", {
-          toastId: "PlaylistsPage",
-        });
-      } else if (error.response.status === 401) {
-        toast.error("You must sign in to access this playlist.", {
-          toastId: "PlaylistsPage",
-        });
-      } else if (error.response.result) {
-        toast.error(error.response.result.error.message, {
-          toastId: "PlaylistsPage",
-        });
-      }
+    const options = { toastId: "PlaylistsPage" };
+    if (error?.response.status === 200) {
+      toast.error("Playlist not found. Check the URL.", options);
+    } else if (error?.response.status === 401) {
+      toast.error("You must sign in to access this playlist.", options);
+    } else if (error?.response.result) {
+      toast.error(error.response.result.error.message, options);
     } else {
       toast.dismiss();
     }

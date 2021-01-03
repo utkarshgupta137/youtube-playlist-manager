@@ -14,7 +14,7 @@ const usePlaylists = (playlistId) => {
       try {
         response = await listPlaylists.playlistId(playlistId);
 
-        if (response.result.items && response.result.items.length > 0) {
+        if (response.result.items?.length > 0) {
           return response.result.items;
         }
       } catch (e) {
@@ -39,7 +39,7 @@ const usePlaylistItems = (playlistId) => {
           playlistId,
           pageToken
         );
-        if (response.result.items.length > 0) {
+        if (response.result.items?.length > 0) {
           const ids = response.result.items.map((playlistItem) => {
             return playlistItem.snippet.resourceId.videoId;
           });

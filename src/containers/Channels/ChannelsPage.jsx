@@ -18,20 +18,13 @@ const ChannelsPage = () => {
   } = usePlaylists(channelId);
 
   useEffect(() => {
-    if (error) {
-      if (error.response.status === 200) {
-        toast.error("Channel not found. Check the URL.", {
-          toastId: "ChannelsPage",
-        });
-      } else if (error.response.status === 401) {
-        toast.error("You must sign in to access this channel.", {
-          toastId: "ChannelsPage",
-        });
-      } else if (error.response.result) {
-        toast.error(error.response.result.error.message, {
-          toastId: "ChannelsPage",
-        });
-      }
+    const options = { toastId: "ChannelsPage" };
+    if (error?.response.status === 200) {
+      toast.error("Channel not found. Check the URL.", options);
+    } else if (error?.response.status === 401) {
+      toast.error("You must sign in to access this channel.", options);
+    } else if (error?.response.result) {
+      toast.error(error.response.result.error.message, options);
     } else {
       toast.dismiss();
     }

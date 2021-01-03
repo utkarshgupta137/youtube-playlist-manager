@@ -10,7 +10,7 @@ const useChannels = (channelId) => {
       try {
         response = await listChannels.channelId(channelId);
 
-        if (response.result.items && response.result.items.length > 0) {
+        if (response.result.items?.length > 0) {
           return response.result.items;
         }
       } catch (e) {
