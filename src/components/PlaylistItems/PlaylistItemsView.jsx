@@ -1,6 +1,8 @@
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cloneDeep from "lodash/cloneDeep";
 import PropTypes from "prop-types";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import Table from "../Table/Table";
@@ -72,6 +74,19 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
       //   Header: "Comment Count",
       //   accessor: "video.statistics.commentCount",
       // },
+      {
+        id: "expander",
+        Cell: (e) => {
+          return (
+            <span {...e.row.getToggleRowExpandedProps()}>
+              <FontAwesomeIcon
+                icon={faPlayCircle}
+                rotation={e.row.isExpanded ? 270 : 0}
+              />
+            </span>
+          );
+        },
+      },
     ];
   }, []);
 
@@ -98,9 +113,26 @@ const PlaylistItemsView = ({ playlistItemsList, hasMore, next }) => {
     });
   }, [playlistItemsList]);
 
+  const renderExpanded = useCallback((row) => {
+    return (
+      <div
+        className="row"
+        dangerouslySetInnerHTML={{
+          __html: row.original.video.player.embedHtml,
+        }}
+      />
+    );
+  }, []);
+
   return (
     <div id="playlistItemsView">
-      <Table columns={columns} data={data} hasMore={hasMore} next={next} />
+      <Table
+        columns={columns}
+        data={data}
+        hasMore={hasMore}
+        next={next}
+        renderExpanded={renderExpanded}
+      />
     </div>
   );
 };

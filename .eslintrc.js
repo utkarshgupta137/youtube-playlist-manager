@@ -36,6 +36,7 @@ const eslintrc = {
         props: false,
       },
     ],
+    "react/no-danger": "off",
     "react/jsx-props-no-spreading": "off",
   },
 };

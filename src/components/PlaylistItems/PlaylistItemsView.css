@@ -11,5 +11,13 @@ div#playlistItemsView .table {
     minmax(24rem, auto)
     minmax(12rem, auto)
     8rem
-    6rem !important;
+    6rem
+    2rem !important;
+}
+
+div#playlistItemsView .table .row {
+  grid-column: 1 / 9;
+  text-align: center;
+
+  background-color: #181818;
 }

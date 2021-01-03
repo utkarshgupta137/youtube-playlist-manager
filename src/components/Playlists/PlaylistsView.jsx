@@ -1,6 +1,8 @@
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cloneDeep from "lodash/cloneDeep";
 import PropTypes from "prop-types";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import Table from "../Table/Table";
@@ -52,6 +54,19 @@ const PlaylistsView = ({ playlistsList, hasMore, next, playlistsPage }) => {
         Header: "Videos",
         accessor: "contentDetails.itemCount",
       },
+      {
+        id: "expander",
+        Cell: (e) => {
+          return (
+            <span {...e.row.getToggleRowExpandedProps()}>
+              <FontAwesomeIcon
+                icon={faPlayCircle}
+                rotation={e.row.isExpanded ? 270 : 0}
+              />
+            </span>
+          );
+        },
+      },
     ];
   }, [playlistsPage]);
 
@@ -66,9 +81,26 @@ const PlaylistsView = ({ playlistsList, hasMore, next, playlistsPage }) => {
     });
   }, [playlistsList]);
 
+  const renderExpanded = useCallback((row) => {
+    return (
+      <div
+        className="row"
+        dangerouslySetInnerHTML={{
+          __html: row.original.player.embedHtml,
+        }}
+      />
+    );
+  }, []);
+
   return (
     <div id="playlistsView">
-      <Table columns={columns} data={data} hasMore={hasMore} next={next} />
+      <Table
+        columns={columns}
+        data={data}
+        hasMore={hasMore}
+        next={next}
+        renderExpanded={renderExpanded}
+      />
     </div>
   );
 };

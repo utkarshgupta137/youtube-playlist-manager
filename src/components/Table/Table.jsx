@@ -1,17 +1,18 @@
 import PropTypes from "prop-types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useGridLayout, useTable } from "react-table";
+import { useExpanded, useGridLayout, useTable } from "react-table";
 
 import "./Table.css";
 
-const Table = ({ columns, data, hasMore, next }) => {
-  const { getTableProps, headerGroups, rows, prepareRow } = useTable(
+const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
+  const { getTableProps, prepareRow, headerGroups, rows } = useTable(
     {
       columns,
       data,
     },
-    useGridLayout
+    useGridLayout,
+    useExpanded
   );
 
   return (
@@ -25,26 +26,25 @@ const Table = ({ columns, data, hasMore, next }) => {
         {headerGroups.map((headerGroup) => {
           return headerGroup.headers.map((column) => {
             return (
-              <div
-                key={column.id}
-                {...column.getHeaderProps()}
-                className="header"
-              >
+              <div {...column.getHeaderProps()} className="header">
                 {column.render("Header")}
               </div>
             );
           });
         })}
         {rows.map((row) => {
+          prepareRow(row);
           return (
-            prepareRow(row) ||
-            row.cells.map((cell) => {
-              return (
-                <div {...cell.getCellProps()} className="cell">
-                  {cell.render("Cell")}
-                </div>
-              );
-            })
+            <>
+              {row.cells.map((cell) => {
+                return (
+                  <div {...cell.getCellProps()} className="cell">
+                    {cell.render("Cell")}
+                  </div>
+                );
+              })}
+              {row.isExpanded ? renderExpanded(row) : null}
+            </>
           );
         })}
       </div>
@@ -57,11 +57,13 @@ Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   hasMore: PropTypes.bool,
   next: PropTypes.func,
+  renderExpanded: PropTypes.func,
 };
 
 Table.defaultProps = {
   hasMore: false,
   next: () => {},
+  renderExpanded: () => {},
 };
 
 export default Table;

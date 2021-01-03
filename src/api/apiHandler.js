@@ -71,7 +71,7 @@ const listPlaylists = {
   channelId: (channelId, pageToken) => {
     if (channelId === "mine") {
       return gapi.client.youtube.playlists.list({
-        part: ["snippet,contentDetails"],
+        part: ["snippet,contentDetails,player"],
         maxResults: 50,
         mine: true,
         pageToken,
@@ -79,7 +79,7 @@ const listPlaylists = {
     }
 
     return gapi.client.youtube.playlists.list({
-      part: ["snippet,contentDetails"],
+      part: ["snippet,contentDetails,player"],
       maxResults: 50,
       channelId,
       pageToken,
@@ -88,7 +88,7 @@ const listPlaylists = {
 
   playlistId: (id, pageToken) => {
     return gapi.client.youtube.playlists.list({
-      part: ["snippet,contentDetails"],
+      part: ["snippet,contentDetails,player"],
       maxResults: 50,
       id,
       pageToken,
@@ -110,10 +110,11 @@ const listPlaylistItems = {
 const listVideos = {
   videoId: (id, pageToken) => {
     return gapi.client.youtube.videos.list({
-      part: ["snippet,contentDetails,statistics"],
+      part: ["snippet,contentDetails,statistics,player"],
       maxResults: 50,
       id,
       pageToken,
+      maxHeight: 360,
     });
   },
 };
