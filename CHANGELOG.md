@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.9...v0.2.0) (2021-01-03)
+
+
+### Features
+
+* **api:** add react-query ([eae6352](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/eae63521f3dc0ab7fdd43be055eb8c0034a5a64b))
+* **head:** add react-helmet-async for custom page titles ([dfc6185](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/dfc61857215fc1f667cb9f195c681559b0e6b888))
+* **refactor:** add react-router ([3ddf096](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/3ddf096db107d33427e2fa7745ad21e0137059f0))
+* **table:** add links ([522f848](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/522f848da86df136438ced443581acbca0dc68c8))
+
 ### [0.1.9](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.8...v0.1.9) (2021-01-01)
 
 
