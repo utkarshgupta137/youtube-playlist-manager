@@ -1,9 +1,20 @@
-import { faLayerGroup } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLayerGroup,
+  faSort,
+  faSortDown,
+  faSortUp,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useExpanded, useGridLayout, useGroupBy, useTable } from "react-table";
+import {
+  useExpanded,
+  useGridLayout,
+  useGroupBy,
+  useSortBy,
+  useTable,
+} from "react-table";
 
 import "./Table.css";
 
@@ -35,9 +46,13 @@ const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
           return `${values[0]}..${values.slice(-1)}`;
         },
       },
+      isMultiSortEvent: () => {
+        return true;
+      },
     },
     useGridLayout,
     useGroupBy,
+    useSortBy,
     useExpanded
   );
 
@@ -54,6 +69,21 @@ const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
             return (
               <div {...column.getHeaderProps()} className="header">
                 {column.render("Header")}
+                {column.canSort ? (
+                  <span {...column.getSortByToggleProps()}>
+                    <FontAwesomeIcon
+                      icon={
+                        column.isSorted
+                          ? column.isSortedDesc
+                            ? faSortDown
+                            : faSortUp
+                          : faSort
+                      }
+                      pull="right"
+                      style={{ marginTop: "0.1rem" }}
+                    />
+                  </span>
+                ) : null}
                 {column.canGroupBy ? (
                   <span {...column.getGroupByToggleProps()}>
                     <FontAwesomeIcon

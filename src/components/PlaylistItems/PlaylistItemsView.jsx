@@ -91,7 +91,7 @@ const PlaylistItemsView = ({ data, hasMore, next }) => {
         },
         aggregate: "sum",
         width: "6rem",
-        Header: "Duration",
+        Header: "Length",
         Cell: (e) => {
           const hours = Math.floor(e.value / 3600);
           const minutes = Math.floor(e.value / 60) % 60;
@@ -122,6 +122,7 @@ const PlaylistItemsView = ({ data, hasMore, next }) => {
       // },
       {
         id: "expander",
+        disableSortBy: true,
         width: "2rem",
         Cell: (e) => {
           return (

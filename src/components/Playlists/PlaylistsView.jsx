@@ -73,6 +73,7 @@ const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
       },
       {
         id: "expander",
+        disableSortBy: true,
         width: "2rem",
         Cell: (e) => {
           return (
