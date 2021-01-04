@@ -6,10 +6,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
   useExpanded,
+  useRowSelect,
   useGridLayout,
   useGroupBy,
   useSortBy,
@@ -19,18 +20,35 @@ import {
 
 import "./Table.css";
 
-const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
-  const { getTableProps, prepareRow, headerGroups, rows } = useTable(
+const Table = ({
+  columns,
+  data,
+  hasMore,
+  next,
+  renderExpanded,
+  setSelectedRowIds,
+}) => {
+  const {
+    getTableProps,
+    prepareRow,
+    headerGroups,
+    rows,
+    state: { selectedRowIds },
+  } = useTable(
     {
       columns,
       data,
       autoResetGroupBy: false,
       autoResetSortBy: false,
       autoResetExpanded: false,
+      autoResetSelectedRows: false,
       defaultColumn: {
         disableGroupBy: true,
       },
-      stateReducer: (newState, action, prevState, instance) => {
+      getRowId: useCallback((row) => {
+        return row.id;
+      }, []),
+      stateReducer: useCallback((newState, action, prevState, instance) => {
         const cols = instance.visibleColumns ?? instance.columns;
         return {
           ...newState,
@@ -40,28 +58,58 @@ const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
             }),
           },
         };
-      },
-      aggregations: {
-        firstLast: (leafValues) => {
-          const values = [...leafValues].sort();
-          if (values.length === 1) {
-            return values[0];
-          }
-          return `${values[0]}..${values.slice(-1)}`;
-        },
-      },
-      isMultiSortEvent: () => {
+      }, []),
+      aggregations: useMemo(() => {
+        return {
+          firstLast: (leafValues) => {
+            const values = [...leafValues].sort();
+            if (values.length === 1) {
+              return values[0];
+            }
+            return `${values[0]}..${values.slice(-1)}`;
+          },
+        };
+      }, []),
+      isMultiSortEvent: useCallback(() => {
         return true;
-      },
-      orderByFn: (arr, funcs, dirs) => {
+      }, []),
+      orderByFn: useCallback((arr, funcs, dirs) => {
         return defaultOrderByFn(arr, funcs.reverse(), dirs.reverse());
-      },
+      }, []),
     },
     useGridLayout,
     useGroupBy,
     useSortBy,
-    useExpanded
+    useExpanded,
+    useRowSelect,
+    useCallback((hooks) => {
+      hooks.getToggleAllRowsSelectedProps.push((props, { instance }) => {
+        return [
+          props,
+          {
+            onChange: (e) => {
+              instance.toggleAllRowsSelected(e.target.checked);
+            },
+            style: {
+              cursor: "pointer",
+            },
+            checked: instance.isAllRowsSelected,
+            title: "Toggle All Rows Selected",
+            indeterminate: Boolean(
+              !instance.isAllRowsSelected &&
+                instance.initialRows.some(({ id }) => {
+                  return instance.state.selectedRowIds[id];
+                })
+            ),
+          },
+        ];
+      });
+    }, [])
   );
+
+  useEffect(() => {
+    setSelectedRowIds(Object.keys(selectedRowIds));
+  }, [setSelectedRowIds, selectedRowIds]);
 
   return (
     <InfiniteScroll
@@ -139,12 +187,14 @@ Table.propTypes = {
   hasMore: PropTypes.bool,
   next: PropTypes.func,
   renderExpanded: PropTypes.func,
+  setSelectedRowIds: PropTypes.func,
 };
 
 Table.defaultProps = {
   hasMore: false,
   next: () => {},
   renderExpanded: () => {},
+  setSelectedRowIds: () => {},
 };
 
 export default Table;

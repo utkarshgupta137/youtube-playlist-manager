@@ -1,0 +1,37 @@
+div.buttonToast {
+  cursor: unset;
+}
+
+div.buttonToast .Toastify__progress-bar--dark {
+  background: #ee0000;
+}
+
+div#buttonToastView {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 2rem;
+
+  padding: 0.5rem;
+
+  place-items: center;
+
+  color: #ffffff;
+}
+
+button#toast {
+  float: right;
+
+  border: 0;
+  padding: 0.5rem 1rem;
+
+  font-size: 1rem;
+  font-weight: 700;
+
+  background: #202020;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+button#toast:hover {
+  background: #303030;
+}

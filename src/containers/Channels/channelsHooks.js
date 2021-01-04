@@ -2,7 +2,7 @@ import { useInfiniteQuery, useQuery } from "react-query";
 
 import { listChannels, listPlaylists } from "../../api/apiHandler";
 
-const useChannels = (channelId) => {
+const useListChannels = (channelId) => {
   return useQuery(
     ["channels", channelId],
     async () => {
@@ -26,7 +26,7 @@ const useChannels = (channelId) => {
   );
 };
 
-const usePlaylists = (channelId) => {
+const useListPlaylists = (channelId) => {
   return useInfiniteQuery(
     ["playlists", channelId],
     async ({ pageParam: pageToken }) => {
@@ -56,4 +56,4 @@ const usePlaylists = (channelId) => {
   );
 };
 
-export { useChannels, usePlaylists };
+export { useListChannels, useListPlaylists };

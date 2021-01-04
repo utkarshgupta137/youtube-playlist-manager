@@ -6,8 +6,8 @@ div#playlistsView {
 }
 
 div#playlistsView .table .row {
-  grid-column: 1 / 7;
+  grid-column: 1 / 8;
   text-align: center;
 
-  background-color: #181818;
+  background: #181818;
 }

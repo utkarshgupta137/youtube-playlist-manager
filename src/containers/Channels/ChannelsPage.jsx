@@ -6,16 +6,16 @@ import { toast } from "react-toastify";
 import ChannelsView from "../../components/Channels/ChannelsView";
 import PlaylistsView from "../../components/Playlists/PlaylistsView";
 
-import { useChannels, usePlaylists } from "./channelsHooks";
+import { useListChannels, useListPlaylists } from "./channelsHooks";
 
 const ChannelsPage = () => {
   const { channelId } = useParams();
-  const { data: channelsList, error } = useChannels(channelId);
+  const { data: channelsList, error } = useListChannels(channelId);
   const {
     data: playlistsList,
     hasNextPage: hasMore,
     fetchNextPage: next,
-  } = usePlaylists(channelId);
+  } = useListPlaylists(channelId);
 
   useEffect(() => {
     const options = { toastId: "ChannelsPage" };

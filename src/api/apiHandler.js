@@ -3,7 +3,7 @@ import { apiKey, clientId } from "./client_secrets.json";
 const discoveryDocs = [
   "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest",
 ];
-const scope = "https://www.googleapis.com/auth/youtube.readonly";
+const scope = "https://www.googleapis.com/auth/youtube";
 
 let googleAuth;
 let googleUser;
@@ -119,6 +119,14 @@ const listVideos = {
   },
 };
 
+const deletePlaylistItems = {
+  playlistItemId: (id) => {
+    return gapi.client.youtube.playlistItems.delete({
+      id,
+    });
+  },
+};
+
 export {
   toggleUser,
   initClient,
@@ -126,4 +134,5 @@ export {
   listPlaylists,
   listPlaylistItems,
   listVideos,
+  deletePlaylistItems,
 };

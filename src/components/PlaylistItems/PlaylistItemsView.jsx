@@ -1,24 +1,41 @@
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { faPlayCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { parse, toSeconds } from "iso8601-duration";
 import PropTypes from "prop-types";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
+import IndeterminateCheckbox from "../IndeterminateCheckbox";
 import Table from "../Table/Table";
 
 import "./PlaylistItemsView.css";
 
-const PlaylistItemsView = ({ data, hasMore, next }) => {
+const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
   const columns = useMemo(() => {
     return [
+      {
+        id: "selector",
+        width: "2rem",
+        Header: (instance) => {
+          return (
+            <IndeterminateCheckbox
+              {...instance.getToggleAllRowsSelectedProps()}
+            />
+          );
+        },
+        Cell: (e) => {
+          return (
+            <IndeterminateCheckbox {...e.row.getToggleRowSelectedProps()} />
+          );
+        },
+      },
       {
         accessor: (originalRow) => {
           return originalRow.snippet.position + 1;
         },
         aggregate: "minMax",
-        width: "6rem",
-        Header: "Position",
+        width: "4rem",
+        Header: "#",
       },
       {
         accessor: "snippet.channelTitle",
@@ -149,14 +166,31 @@ const PlaylistItemsView = ({ data, hasMore, next }) => {
     ) : null;
   }, []);
 
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
+
   return (
     <div id="playlistItemsView">
+      <button
+        id="trash"
+        type="button"
+        disabled={
+          !data.some((item) => {
+            return selectedRowIds.includes(item.id);
+          })
+        }
+        onClick={() => {
+          onDeleteButtonClicked(selectedRowIds);
+        }}
+      >
+        <FontAwesomeIcon icon={faTrash} />
+      </button>
       <Table
         columns={columns}
         data={data}
         hasMore={hasMore}
         next={next}
         renderExpanded={renderExpanded}
+        setSelectedRowIds={setSelectedRowIds}
       />
     </div>
   );
@@ -166,6 +200,7 @@ PlaylistItemsView.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   hasMore: PropTypes.bool,
   next: PropTypes.func,
+  onDeleteButtonClicked: PropTypes.func.isRequired,
 };
 
 PlaylistItemsView.defaultProps = {

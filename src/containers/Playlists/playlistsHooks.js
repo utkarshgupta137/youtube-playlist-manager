@@ -1,12 +1,19 @@
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useRef } from "react";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 
 import {
   listPlaylistItems,
   listPlaylists,
   listVideos,
+  deletePlaylistItems,
 } from "../../api/apiHandler";
 
-const usePlaylists = (playlistId) => {
+const useListPlaylists = (playlistId) => {
   return useQuery(
     ["playlists", playlistId],
     async () => {
@@ -30,7 +37,7 @@ const usePlaylists = (playlistId) => {
   );
 };
 
-const usePlaylistItems = (playlistId) => {
+const useListPlaylistItems = (playlistId) => {
   return useInfiniteQuery(
     ["playlistItems", playlistId],
     async ({ pageParam: pageToken }) => {
@@ -73,4 +80,57 @@ const usePlaylistItems = (playlistId) => {
   );
 };
 
-export { usePlaylists, usePlaylistItems };
+const useDeletePlaylistItems = (playlistId) => {
+  const timeoutId = useRef(null);
+  const queryClient = useQueryClient();
+  const queryKey = ["playlistItems", playlistId];
+  return useMutation(
+    (playlistItemIds) => {
+      return Promise.all(
+        playlistItemIds.map(async (playlistItemId) => {
+          await deletePlaylistItems.playlistItemId(playlistItemId);
+        })
+      );
+    },
+    {
+      onMutate: async (variables) => {
+        clearTimeout(timeoutId.current);
+        await queryClient.cancelQueries(queryKey);
+        const previousState = queryClient.getQueryData(queryKey);
+
+        queryClient.setQueryData(queryKey, (oldData) => {
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page) => {
+              return {
+                ...page,
+                playlistItemsList: page.playlistItemsList
+                  .filter((playlistItem) => {
+                    return !variables.includes(playlistItem.id);
+                  })
+                  .map((playlistItem, i) => {
+                    playlistItem.snippet.position = i;
+                    return playlistItem;
+                  }),
+              };
+            }),
+          };
+        });
+
+        return previousState;
+      },
+      onError: (err, variables, previousState) => {
+        clearTimeout(timeoutId.current);
+        queryClient.setQueryData(queryKey, previousState);
+      },
+      onSuccess: () => {
+        clearTimeout(timeoutId.current);
+        timeoutId.current = setTimeout(() => {
+          queryClient.invalidateQueries(queryKey);
+        }, 20 * 1000);
+      },
+    }
+  );
+};
+
+export { useDeletePlaylistItems, useListPlaylists, useListPlaylistItems };

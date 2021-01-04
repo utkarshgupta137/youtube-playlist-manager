@@ -1,11 +1,42 @@
 div#playlistItemsView {
+  display: grid;
+  grid-template-columns: 2rem auto;
+  grid-template-rows: 2rem auto;
+
   padding: 2rem;
   padding-bottom: 4rem;
 }
 
+button#trash {
+  grid-area: 1 / 1;
+  margin: 0;
+  margin-left: 0.1rem;
+
+  border: 0;
+  padding: 0;
+
+  font-size: 1rem;
+
+  background: #181818;
+  color: #ff0000;
+  cursor: pointer;
+}
+
+button#trash:hover {
+  color: #dd0000;
+}
+
+button#trash:disabled {
+  color: #606060;
+}
+
+div#playlistItemsView .infinite-scroll-component__outerdiv {
+  grid-area: 2 / 1 / 2 / 3;
+}
+
 div#playlistItemsView .table .row {
-  grid-column: 1 / 9;
+  grid-column: 1 / 10;
   text-align: center;
 
-  background-color: #181818;
+  background: #181818;
 }
