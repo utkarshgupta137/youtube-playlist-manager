@@ -20,7 +20,6 @@ queryClient.setDefaultOptions({
   queries: {
     staleTime: 1000 * 60 * 60,
     cacheTime: Infinity,
-    refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     retry: false,
