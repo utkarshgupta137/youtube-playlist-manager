@@ -24,6 +24,9 @@ const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
     {
       columns,
       data,
+      autoResetGroupBy: false,
+      autoResetSortBy: false,
+      autoResetExpanded: false,
       defaultColumn: {
         disableGroupBy: true,
       },
