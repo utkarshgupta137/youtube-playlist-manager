@@ -14,6 +14,7 @@ import {
   useGroupBy,
   useSortBy,
   useTable,
+  defaultOrderByFn,
 } from "react-table";
 
 import "./Table.css";
@@ -48,6 +49,9 @@ const Table = ({ columns, data, hasMore, next, renderExpanded }) => {
       },
       isMultiSortEvent: () => {
         return true;
+      },
+      orderByFn: (arr, funcs, dirs) => {
+        return defaultOrderByFn(arr, funcs.reverse(), dirs.reverse());
       },
     },
     useGridLayout,
