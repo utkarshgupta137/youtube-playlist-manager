@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.2.0...v0.2.1) (2021-01-04)
+
+
+### Features
+
+* **table:** add expand to play ([d892262](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/d8922626f45655617479f69b855dac7738f07d45))
+* **table:** add groupBy ([8c22d12](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/8c22d12c58fc8c83b2d494265900ef2a0bf3c2a1))
+* **table:** add sortBy ([65d8af2](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/65d8af2557a2367b99b776071d76ccf3ff8f29c4))
+
+
+### Bug Fixes
+
+* **query:** enable refetch stale queries on mount ([86d5acf](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/86d5acf7800b24e3eddc20a1874bee506d802ed3))
+
 ## [0.2.0](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.1.9...v0.2.0) (2021-01-03)
 
 
