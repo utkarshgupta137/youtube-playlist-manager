@@ -116,16 +116,23 @@ const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
         width: "6rem",
         Header: "Length",
         Cell: (e) => {
-          const value = toSeconds(parse(e.value));
-          const hours = Math.floor(value / 3600);
-          const minutes = Math.floor(value / 60) % 60;
-          const seconds = value % 60;
+          if (e.value) {
+            const value = toSeconds(parse(e.value));
+            const hours = Math.floor(value / 3600);
+            let minutes = Math.floor(value / 60) % 60;
+            if (minutes < 10) {
+              minutes = `0${minutes}`;
+            }
+            let seconds = value % 60;
+            if (seconds < 10) {
+              seconds = `0${seconds}`;
+            }
 
-          return [hours, minutes, seconds]
-            .filter((v, i) => {
-              return v !== 0 || i > 0;
-            })
-            .join(":");
+            return hours > 0
+              ? `${hours}:${minutes}:${seconds}`
+              : `${minutes}:${seconds}`;
+          }
+          return null;
         },
       },
       // {
