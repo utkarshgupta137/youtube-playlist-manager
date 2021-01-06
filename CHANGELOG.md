@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.2.1...v0.3.0) (2021-01-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Google auth scope changed from readonly to standard
+
+### Features
+
+* add remove video flow ([d303474](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/d30347444f2b52a315beebfee794a7c2548b2641))
+
+
+### Bug Fixes
+
+* **head:** remove unnecessary meta tag ([a5c4ac6](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/a5c4ac6d2c4e344faf7ae16bb25be03c6ca81168))
+* **table:** don't autoReset GroupBy, SortBy, Expanded on data change ([1967203](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/1967203f93fa91c867a5afc5e109f14fc329c311))
+* **table:** reverse multiSort order for WikiPedia-like sorting ([80c5c86](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/80c5c86cc267d1f7cae26b9a2f2bc29ff93f5786))
+* **table:** update duration output for playlistItemsView ([868b08f](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/868b08fc90b5d68ec6e6ec896e4b3c829fcb9a3e))
+
 ### [0.2.1](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.2.0...v0.2.1) (2021-01-04)
 
 
