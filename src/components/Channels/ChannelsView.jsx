@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
 
+import { getChannelUrl } from "../../utils/urlUtils";
 import Table from "../Table/Table";
 
 import "./ChannelsView.css";
@@ -15,7 +16,7 @@ const ChannelsView = ({ data, hasMore, next }) => {
         Cell: (e) => {
           return (
             <a
-              href={`https://youtube.com/channel/${e.row.original.id}`}
+              href={getChannelUrl(e.row.original.id)}
               rel="noreferrer"
               target="_blank"
             >

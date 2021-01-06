@@ -29,4 +29,22 @@ const getPlaylistId = memoize((url) => {
   return null;
 });
 
-export { getChannelId, getPlaylistId };
+const getChannelUrl = (id) => {
+  return `https://youtube.com/channel/${id}`;
+};
+
+const getPlaylistUrl = (id) => {
+  return `hhttps://www.youtube.com/playlist?list=${id}`;
+};
+
+const getVideoUrl = (id, playlistId, position) => {
+  return `https://www.youtube.com/watch?v=${id}&list=${playlistId}&index=${position}`;
+};
+
+export {
+  getChannelId,
+  getChannelUrl,
+  getPlaylistId,
+  getPlaylistUrl,
+  getVideoUrl,
+};

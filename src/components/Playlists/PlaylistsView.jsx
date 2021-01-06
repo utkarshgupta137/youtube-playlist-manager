@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import React, { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 
+import { getPlaylistUrl } from "../../utils/urlUtils";
 import Table from "../Table/Table";
 
 import "./PlaylistsView.css";
@@ -46,7 +47,7 @@ const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
           return row ? (
             playlistsPage ? (
               <a
-                href={`https://www.youtube.com/playlist?list=${e.row.original.id}`}
+                href={getPlaylistUrl(e.row.original.id)}
                 rel="noreferrer"
                 target="_blank"
               >
