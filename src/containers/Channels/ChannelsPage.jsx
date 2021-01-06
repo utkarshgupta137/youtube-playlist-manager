@@ -42,7 +42,6 @@ const ChannelsPage = () => {
               })
             : "YouTube Playlist Manager"}
         </title>
-        <meta name="description" content="Helmet application" />
       </Helmet>
       <ChannelsView data={channelsList || []} />
       <PlaylistsView

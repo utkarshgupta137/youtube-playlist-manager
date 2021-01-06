@@ -106,7 +106,6 @@ const PlaylistsPage = () => {
               })
             : "YouTube Playlist Manager"}
         </title>
-        <meta name="description" content="Helmet application" />
       </Helmet>
       <PlaylistsView data={playlistsList || []} />
       <PlaylistItemsView
