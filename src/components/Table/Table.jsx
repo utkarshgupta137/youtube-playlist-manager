@@ -49,7 +49,7 @@ const Table = ({
         return row.id;
       }, []),
       stateReducer: useCallback((newState, action, prevState, instance) => {
-        const cols = instance.visibleColumns ?? instance.columns;
+        const cols = instance.visibleColumns || instance.columns;
         return {
           ...newState,
           gridLayout: {

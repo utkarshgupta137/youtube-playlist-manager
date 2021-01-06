@@ -31,12 +31,13 @@ const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
         },
       },
       {
-        accessor: (originalRow) => {
-          return originalRow.snippet.position + 1;
-        },
+        accessor: "snippet.position",
         aggregate: "minMax",
         width: "4rem",
         Header: "#",
+        Cell: (e) => {
+          return e.value + 1;
+        },
       },
       {
         accessor: "snippet.channelTitle",
@@ -49,12 +50,13 @@ const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
         },
       },
       {
-        accessor: (originalRow) => {
-          return originalRow.snippet.publishedAt.substring(0, 10);
-        },
+        accessor: "snippet.publishedAt",
         aggregate: "firstLast",
         width: "minmax(8rem, min-content)",
         Header: "Added on",
+        Cell: (e) => {
+          return e.value.substring(0, 10);
+        },
       },
       {
         accessor: "video.snippet.title",
@@ -86,7 +88,7 @@ const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
         width: "minmax(10rem, auto)",
         Header: "Created by",
         Cell: (e) => {
-          const row = e.row.original ?? e.row.subRows[0].original;
+          const row = e.row.original || e.row.subRows[0].original;
           return row ? (
             <Link to={`/channel/${row.video.snippet.channelId}`}>
               {e.value}
@@ -100,24 +102,24 @@ const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
         },
       },
       {
-        accessor: (originalRow) => {
-          return originalRow.video.snippet.publishedAt.substring(0, 10);
-        },
+        accessor: "video.snippet.publishedAt",
         aggregate: "firstLast",
         width: "minmax(8rem, min-content)",
         Header: "Created on",
+        Cell: (e) => {
+          return e.value.substring(0, 10);
+        },
       },
       {
-        accessor: (originalRow) => {
-          return toSeconds(parse(originalRow.video.contentDetails.duration));
-        },
+        accessor: "video.contentDetails.duration",
         aggregate: "sum",
         width: "6rem",
         Header: "Length",
         Cell: (e) => {
-          const hours = Math.floor(e.value / 3600);
-          const minutes = Math.floor(e.value / 60) % 60;
-          const seconds = e.value % 60;
+          const value = toSeconds(parse(e.value));
+          const hours = Math.floor(value / 3600);
+          const minutes = Math.floor(value / 60) % 60;
+          const seconds = value % 60;
 
           return [hours, minutes, seconds]
             .filter((v, i) => {

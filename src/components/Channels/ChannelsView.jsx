@@ -26,11 +26,12 @@ const ChannelsView = ({ data, hasMore, next }) => {
         },
       },
       {
-        accessor: (originalRow) => {
-          return originalRow.snippet.publishedAt.substring(0, 10);
-        },
+        accessor: "snippet.publishedAt",
         width: "minmax(8rem, min-content)",
         Header: "Created on",
+        Cell: (e) => {
+          return e.value.substring(0, 10);
+        },
       },
       {
         accessor: "snippet.description",
@@ -38,17 +39,17 @@ const ChannelsView = ({ data, hasMore, next }) => {
         Header: "Description",
       },
       {
-        Header: "Views",
-        width: "minmax(8rem, min-content)",
         accessor: "statistics.viewCount",
+        width: "minmax(8rem, min-content)",
+        Header: "Views",
         Cell: (e) => {
           return parseInt(e.value, 10).toLocaleString();
         },
       },
       {
-        Header: "Subscribers",
-        width: "minmax(8rem, min-content)",
         accessor: "statistics.subscriberCount",
+        width: "minmax(8rem, min-content)",
+        Header: "Subscribers",
         Cell: (e) => {
           return parseInt(e.value, 10).toLocaleString();
         },

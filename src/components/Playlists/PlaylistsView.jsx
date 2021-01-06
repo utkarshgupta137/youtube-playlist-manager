@@ -22,7 +22,7 @@ const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
           return e.value.join(", ");
         },
         Cell: (e) => {
-          const row = e.row.original ?? e.row.subRows[0].original;
+          const row = e.row.original || e.row.subRows[0].original;
           return row && playlistsPage ? (
             <Link to={`/channel/${row.snippet.channelId}`}>{e.value}</Link>
           ) : (
@@ -31,12 +31,13 @@ const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
         },
       },
       {
-        accessor: (originalRow) => {
-          return originalRow.snippet.publishedAt.substring(0, 10);
-        },
+        accessor: "snippet.publishedAt",
         aggregate: "firstLast",
         width: "minmax(8rem, min-content)",
         Header: "Created on",
+        Cell: (e) => {
+          return e.value.substring(0, 10);
+        },
       },
       {
         accessor: "snippet.title",
