@@ -1,14 +1,12 @@
 import memoize from "lodash/memoize";
 
 const getURLObj = (url) => {
-  if (url) {
-    try {
-      if (url.startsWith("http://") || url.startsWith("https://")) {
-        return new URL(url);
-      }
-      return new URL(`https://${url}`);
-    } catch (e) {}
-  }
+  try {
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return new URL(url);
+    }
+    return new URL(`https://${url}`);
+  } catch (e) {}
   return null;
 };
 
@@ -30,11 +28,11 @@ const getPlaylistId = memoize((url) => {
 });
 
 const getChannelUrl = (id) => {
-  return `https://youtube.com/channel/${id}`;
+  return `https://www.youtube.com/channel/${id}`;
 };
 
 const getPlaylistUrl = (id) => {
-  return `hhttps://www.youtube.com/playlist?list=${id}`;
+  return `https://www.youtube.com/playlist?list=${id}`;
 };
 
 const getVideoUrl = (id, playlistId, position) => {
