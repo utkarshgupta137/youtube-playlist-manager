@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/youtube-playlist-manager/static/css/main.2cdcac90.chunk.css",
-    "main.js": "/youtube-playlist-manager/static/js/main.b4c9a36f.chunk.js",
-    "main.js.map": "/youtube-playlist-manager/static/js/main.b4c9a36f.chunk.js.map",
+    "main.css": "/youtube-playlist-manager/static/css/main.2728f3da.chunk.css",
+    "main.js": "/youtube-playlist-manager/static/js/main.4f5ef259.chunk.js",
+    "main.js.map": "/youtube-playlist-manager/static/js/main.4f5ef259.chunk.js.map",
     "runtime-main.js": "/youtube-playlist-manager/static/js/runtime-main.0538b3a2.js",
     "runtime-main.js.map": "/youtube-playlist-manager/static/js/runtime-main.0538b3a2.js.map",
     "static/css/2.8599fe3d.chunk.css": "/youtube-playlist-manager/static/css/2.8599fe3d.chunk.css",
-    "static/js/2.ba7bcca5.chunk.js": "/youtube-playlist-manager/static/js/2.ba7bcca5.chunk.js",
-    "static/js/2.ba7bcca5.chunk.js.map": "/youtube-playlist-manager/static/js/2.ba7bcca5.chunk.js.map",
+    "static/js/2.06ec8ce6.chunk.js": "/youtube-playlist-manager/static/js/2.06ec8ce6.chunk.js",
+    "static/js/2.06ec8ce6.chunk.js.map": "/youtube-playlist-manager/static/js/2.06ec8ce6.chunk.js.map",
     "index.html": "/youtube-playlist-manager/index.html",
     "static/css/2.8599fe3d.chunk.css.map": "/youtube-playlist-manager/static/css/2.8599fe3d.chunk.css.map",
-    "static/css/main.2cdcac90.chunk.css.map": "/youtube-playlist-manager/static/css/main.2cdcac90.chunk.css.map",
-    "static/js/2.ba7bcca5.chunk.js.LICENSE.txt": "/youtube-playlist-manager/static/js/2.ba7bcca5.chunk.js.LICENSE.txt"
+    "static/css/main.2728f3da.chunk.css.map": "/youtube-playlist-manager/static/css/main.2728f3da.chunk.css.map",
+    "static/js/2.06ec8ce6.chunk.js.LICENSE.txt": "/youtube-playlist-manager/static/js/2.06ec8ce6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0538b3a2.js",
     "static/css/2.8599fe3d.chunk.css",
-    "static/js/2.ba7bcca5.chunk.js",
-    "static/css/main.2cdcac90.chunk.css",
-    "static/js/main.b4c9a36f.chunk.js"
+    "static/js/2.06ec8ce6.chunk.js",
+    "static/css/main.2728f3da.chunk.css",
+    "static/js/main.4f5ef259.chunk.js"
   ]
 }
