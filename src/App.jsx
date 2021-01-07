@@ -20,8 +20,8 @@ const App = () => {
       <HeaderView user={user} toggleUser={toggleUser} />
       <ToastContainer
         position="top-right"
-        transition={Flip}
         autoClose={10000}
+        transition={Flip}
         closeOnClick
         pauseOnFocusLoss
         pauseOnHover

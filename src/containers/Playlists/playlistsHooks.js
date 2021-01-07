@@ -127,7 +127,7 @@ const useDeletePlaylistItems = (playlistId) => {
         clearTimeout(timeoutId.current);
         timeoutId.current = setTimeout(() => {
           queryClient.invalidateQueries(queryKey);
-        }, 20 * 1000);
+        }, 1000 * 20);
       },
     }
   );
