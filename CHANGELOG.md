@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.3.0...v0.3.1) (2021-01-07)
+
+
+### Bug Fixes
+
+* **expanded:** increase player size ([44e83c4](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/44e83c48b548049d5e9965b9fade9ea1224c54c4))
+* **url:** update getChannelUrl & getPlaylistUrl ([59a15b6](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/59a15b60a7ef932e1667279ab4a797f3dcd4792c))
+
 ## [0.3.0](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.2.1...v0.3.0) (2021-01-06)
 
 
