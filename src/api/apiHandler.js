@@ -114,7 +114,7 @@ const listVideos = {
       maxResults: 50,
       id,
       pageToken,
-      maxHeight: 360,
+      maxHeight: 480,
     });
   },
 };
