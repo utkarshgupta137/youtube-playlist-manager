@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/youtube-playlist-manager/static/css/main.5e1ac9f1.chunk.css",
-    "main.js": "/youtube-playlist-manager/static/js/main.e1b66091.chunk.js",
-    "main.js.map": "/youtube-playlist-manager/static/js/main.e1b66091.chunk.js.map",
+    "main.css": "/youtube-playlist-manager/static/css/main.d65af62d.chunk.css",
+    "main.js": "/youtube-playlist-manager/static/js/main.6389617a.chunk.js",
+    "main.js.map": "/youtube-playlist-manager/static/js/main.6389617a.chunk.js.map",
     "runtime-main.js": "/youtube-playlist-manager/static/js/runtime-main.0538b3a2.js",
     "runtime-main.js.map": "/youtube-playlist-manager/static/js/runtime-main.0538b3a2.js.map",
-    "static/css/2.8599fe3d.chunk.css": "/youtube-playlist-manager/static/css/2.8599fe3d.chunk.css",
-    "static/js/2.1f346ea5.chunk.js": "/youtube-playlist-manager/static/js/2.1f346ea5.chunk.js",
-    "static/js/2.1f346ea5.chunk.js.map": "/youtube-playlist-manager/static/js/2.1f346ea5.chunk.js.map",
+    "static/css/2.ba7cea10.chunk.css": "/youtube-playlist-manager/static/css/2.ba7cea10.chunk.css",
+    "static/js/2.95579f08.chunk.js": "/youtube-playlist-manager/static/js/2.95579f08.chunk.js",
+    "static/js/2.95579f08.chunk.js.map": "/youtube-playlist-manager/static/js/2.95579f08.chunk.js.map",
     "index.html": "/youtube-playlist-manager/index.html",
-    "static/css/2.8599fe3d.chunk.css.map": "/youtube-playlist-manager/static/css/2.8599fe3d.chunk.css.map",
-    "static/css/main.5e1ac9f1.chunk.css.map": "/youtube-playlist-manager/static/css/main.5e1ac9f1.chunk.css.map",
-    "static/js/2.1f346ea5.chunk.js.LICENSE.txt": "/youtube-playlist-manager/static/js/2.1f346ea5.chunk.js.LICENSE.txt"
+    "static/css/2.ba7cea10.chunk.css.map": "/youtube-playlist-manager/static/css/2.ba7cea10.chunk.css.map",
+    "static/css/main.d65af62d.chunk.css.map": "/youtube-playlist-manager/static/css/main.d65af62d.chunk.css.map",
+    "static/js/2.95579f08.chunk.js.LICENSE.txt": "/youtube-playlist-manager/static/js/2.95579f08.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0538b3a2.js",
-    "static/css/2.8599fe3d.chunk.css",
-    "static/js/2.1f346ea5.chunk.js",
-    "static/css/main.5e1ac9f1.chunk.css",
-    "static/js/main.e1b66091.chunk.js"
+    "static/css/2.ba7cea10.chunk.css",
+    "static/js/2.95579f08.chunk.js",
+    "static/css/main.d65af62d.chunk.css",
+    "static/js/main.6389617a.chunk.js"
   ]
 }
