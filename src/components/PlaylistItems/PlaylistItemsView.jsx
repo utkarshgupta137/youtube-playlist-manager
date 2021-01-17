@@ -111,19 +111,20 @@ const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
         },
       },
       {
-        accessor: "video.contentDetails.duration",
+        accessor: (row) => {
+          return toSeconds(parse(row.video.contentDetails.duration));
+        },
         aggregate: "sum",
         width: "6rem",
         Header: "Length",
         Cell: (e) => {
           if (e.value) {
-            const value = toSeconds(parse(e.value));
-            const hours = Math.floor(value / 3600);
-            let minutes = Math.floor(value / 60) % 60;
+            const hours = Math.floor(e.value / 3600);
+            let minutes = Math.floor(e.value / 60) % 60;
             if (minutes < 10) {
               minutes = `0${minutes}`;
             }
-            let seconds = value % 60;
+            let seconds = e.value % 60;
             if (seconds < 10) {
               seconds = `0${seconds}`;
             }
