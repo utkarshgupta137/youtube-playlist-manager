@@ -9,13 +9,13 @@ import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
+  defaultOrderByFn,
   useExpanded,
-  useRowSelect,
   useGridLayout,
   useGroupBy,
+  useRowSelect,
   useSortBy,
   useTable,
-  defaultOrderByFn,
 } from "react-table";
 
 import "./Table.css";
@@ -48,17 +48,6 @@ const Table = ({
       getRowId: useCallback((row) => {
         return row.id;
       }, []),
-      stateReducer: useCallback((newState, action, prevState, instance) => {
-        const cols = instance.visibleColumns || instance.columns;
-        return {
-          ...newState,
-          gridLayout: {
-            columnWidths: cols.map((column) => {
-              return column.width || "auto";
-            }),
-          },
-        };
-      }, []),
       aggregations: useMemo(() => {
         return {
           firstLast: (leafValues) => {
@@ -83,6 +72,27 @@ const Table = ({
     useExpanded,
     useRowSelect,
     useCallback((hooks) => {
+      hooks.getTableProps.push((props, { instance }) => {
+        const columnWidths = instance.visibleColumns.map((column) => {
+          const index = instance.allColumns.findIndex((col) => {
+            return col.id === column.id;
+          });
+          const width = instance.state.gridLayout.columnWidths[index];
+          if (width === `auto`) {
+            return column.width || `auto`;
+          }
+          return width;
+        });
+        return [
+          props,
+          {
+            style: {
+              display: `grid`,
+              gridTemplateColumns: columnWidths.join(` `),
+            },
+          },
+        ];
+      });
       hooks.getToggleAllRowsSelectedProps.push((props, { instance }) => {
         return [
           props,
