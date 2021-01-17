@@ -35,8 +35,12 @@ const getPlaylistUrl = (id) => {
   return `https://www.youtube.com/playlist?list=${id}`;
 };
 
-const getVideoUrl = (id, playlistId, position) => {
+const getPlaylistItemUrl = (id, playlistId, position) => {
   return `https://www.youtube.com/watch?v=${id}&list=${playlistId}&index=${position}`;
+};
+
+const getVideoUrl = (id) => {
+  return `https://www.youtube.com/watch?v=${id}`;
 };
 
 export {
@@ -44,5 +48,6 @@ export {
   getChannelUrl,
   getPlaylistId,
   getPlaylistUrl,
+  getPlaylistItemUrl,
   getVideoUrl,
 };

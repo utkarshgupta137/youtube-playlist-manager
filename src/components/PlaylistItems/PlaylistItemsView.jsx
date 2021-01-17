@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import React, { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { getVideoUrl } from "../../utils/urlUtils";
+import { getPlaylistItemUrl } from "../../utils/urlUtils";
 import IndeterminateCheckbox from "../IndeterminateCheckbox";
 import Table from "../Table/Table";
 
@@ -66,7 +66,7 @@ const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
           const row = e.row.original;
           return row ? (
             <a
-              href={getVideoUrl(
+              href={getPlaylistItemUrl(
                 row.video.id,
                 row.snippet.playlistId,
                 row.snippet.position
