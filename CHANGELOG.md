@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.3.1...v0.3.2) (2021-01-17)
+
+
+### Bug Fixes
+
+* **css:** remove unnecessary grid ([58a92dc](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/58a92dc3e30e3c16485c17df4fba554830f81b08))
+* **css:** use border instead of grid-gap ([ff6ea40](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/ff6ea40f4dd5f5ac8c87c99777429d4e78da8d7f))
+* **table:** fix duration sorting ([20b3cf4](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/20b3cf494d435f12d542988b3142ce201ac68f42))
+* **table:** fix grid layout ([16093b4](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/16093b4c6775f53e27208b3cb585812cc8b9106d))
+* **table:** hide created by column from playlists table on channel page ([d789580](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/d7895800d8c10b569d320d773aa01b61798ff348))
+* **url:** rename getVideoUrl to getPlaylistItemUrl & add getVideoUrl ([aa1c453](https://github.com/utkarshgupta137/youtube-playlist-manager/commit/aa1c453732f72b82618a590be64419c3b8f5d74d))
+
 ### [0.3.1](https://github.com/utkarshgupta137/youtube-playlist-manager/compare/v0.3.0...v0.3.1) (2021-01-07)
 
 
