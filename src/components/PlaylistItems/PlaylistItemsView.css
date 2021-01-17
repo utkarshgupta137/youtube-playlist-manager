@@ -1,16 +1,12 @@
 div#playlistItemsView {
-  display: grid;
-  grid-template-columns: 2rem auto;
-  grid-template-rows: 2rem auto;
+  margin-bottom: -4rem;
 
   padding: 2rem;
   padding-bottom: 4rem;
 }
 
 button#trash {
-  grid-area: 1 / 1;
-  margin: 0;
-  margin-left: 0.1rem;
+  margin: 0 0 0.2rem 0.64rem;
 
   border: 0;
   padding: 0;
@@ -28,10 +24,6 @@ button#trash:hover {
 
 button#trash:disabled {
   color: #606060;
-}
-
-div#playlistItemsView .infinite-scroll-component__outerdiv {
-  grid-area: 2 / 1 / 2 / 3;
 }
 
 div#playlistItemsView .table .row {
