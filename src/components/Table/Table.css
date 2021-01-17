@@ -1,6 +1,5 @@
 div .table {
   border: 1px solid #ffffff;
-  gap: 1px;
 
   overflow: auto;
 
@@ -9,6 +8,7 @@ div .table {
 
 div .table .header,
 div .table .cell {
+  border: 0.5px solid #ffffff;
   padding: 0.5rem;
 
   background: #181818;

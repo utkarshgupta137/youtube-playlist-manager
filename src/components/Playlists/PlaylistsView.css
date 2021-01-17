@@ -6,6 +6,8 @@ div#playlistsView {
 }
 
 div#playlistsView .table .row {
+  border: 0.5px solid #ffffff;
+
   text-align: center;
 
   background: #181818;
