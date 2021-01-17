@@ -93,6 +93,19 @@ const Table = ({
           },
         ];
       });
+      hooks.getRowProps.push((props, { row }) => {
+        if (row.isExpanded) {
+          return [
+            props,
+            {
+              style: {
+                gridColumn: `1 / ${row.cells.length + 1}`,
+              },
+            },
+          ];
+        }
+        return [props, {}];
+      });
       hooks.getToggleAllRowsSelectedProps.push((props, { instance }) => {
         return [
           props,

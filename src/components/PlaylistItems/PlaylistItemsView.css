@@ -35,7 +35,6 @@ div#playlistItemsView .infinite-scroll-component__outerdiv {
 }
 
 div#playlistItemsView .table .row {
-  grid-column: 1 / 10;
   text-align: center;
 
   background: #181818;

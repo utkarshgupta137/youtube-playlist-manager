@@ -11,7 +11,7 @@ import "./PlaylistsView.css";
 
 const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
   const columns = useMemo(() => {
-    return [
+    const cols = [
       {
         accessor: "snippet.channelTitle",
         aggregate: "unique",
@@ -64,7 +64,7 @@ const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
       },
       {
         accessor: "snippet.description",
-        width: "minmax(18rem, auto)",
+        width: `minmax(${playlistsPage ? "18rem" : "32rem"}, auto)`,
         Header: "Description",
       },
       {
@@ -89,6 +89,7 @@ const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
         },
       },
     ];
+    return playlistsPage ? cols : cols.slice(1);
   }, [playlistsPage]);
 
   const renderExpanded = useCallback((row) => {
@@ -98,6 +99,7 @@ const PlaylistsView = ({ data, hasMore, next, playlistsPage }) => {
         dangerouslySetInnerHTML={{
           __html: row.original.player.embedHtml,
         }}
+        {...row.getRowProps()}
       />
     );
   }, []);

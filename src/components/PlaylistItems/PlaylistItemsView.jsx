@@ -177,6 +177,7 @@ const PlaylistItemsView = ({ data, hasMore, next, onDeleteButtonClicked }) => {
         dangerouslySetInnerHTML={{
           __html: row.original.video.player.embedHtml,
         }}
+        {...row.getRowProps()}
       />
     ) : null;
   }, []);
